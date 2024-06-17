@@ -58,7 +58,9 @@ class GoogleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Placeholder(
+      fallbackHeight: 54,
+    );
   }
 }
 
@@ -67,6 +69,8 @@ class GuestButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Placeholder(
+      fallbackHeight: 54,
+    );
   }
 }
