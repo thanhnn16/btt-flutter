@@ -17,9 +17,15 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController(
+    text: "Nguyễn Thành"
+  );
+  TextEditingController phoneNumberController = TextEditingController(
+    text: "0346542636"
+  );
+  TextEditingController passwordController = TextEditingController(
+    text: "123456"
+  );
 
   late bool showPassword;
 
@@ -46,187 +52,213 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (BuildContext context, AuthState state) {
-
+        if (state.user.id.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Sign up successfully"),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginScreen(),
+            ),
+          );
+        }
       },
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: Material(
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: SafeArea(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.createAccount,
-                        style: Theme.of(context).textTheme.headlineLarge,
-                        textAlign: TextAlign.start,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        AppLocalizations.of(context)!.letsCreateAccount,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const SizedBox(height: 24),
-                      Input(
-                        label: AppLocalizations.of(context)!.fullName,
-                        hint: AppLocalizations.of(context)!.enterFullName,
-                        error: fullNameError,
-                        onChanged: (value) {
-                          setState(() {
-                            fullNameError =
-                                Validator.validateFullName(context, value);
-                          });
-                        },
-                        controller: fullNameController,
-                      ),
-                      Input(
-                        label: AppLocalizations.of(context)!.phoneNumber,
-                        hint: AppLocalizations.of(context)!.enterPhoneNumber,
-                        maxLength: 10,
-                        controller: phoneNumberController,
-                        error: phoneError,
-                        onChanged: (value) {
-                          setState(() {
-                            phoneError =
-                                Validator.validatePhoneNumber(context, value);
-                          });
-                        },
-                        keyboardType: TextInputType.phone,
-                      ),
-                      Input(
-                        label: AppLocalizations.of(context)!.password,
-                        hint: AppLocalizations.of(context)!.enterPassword,
-                        controller: passwordController,
-                        isPassword: true,
-                        showPassword: showPassword,
-                        error: passwordError,
-                        onChanged: (value) {
-                          setState(() {
-                            passwordError =
-                                Validator.validatePassword(context, value);
-                          });
-                        },
-                        togglePasswordVisibility: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
-                      ),
-                      Wrap(
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text:
-                                      AppLocalizations.of(context)!.bySigningUp,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                TextSpan(
-                                  text: AppLocalizations.of(context)!
-                                      .termsOfService,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(
-                                        color: Colors.blue,
-                                      ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // TODO: Handle "Terms of Service" tap
-                                    },
-                                ),
-                                TextSpan(
-                                  text: AppLocalizations.of(context)!.and,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                TextSpan(
-                                  text: AppLocalizations.of(context)!
-                                      .privacyPolicy,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(
-                                        color: Colors.blue,
-                                      ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // TODO: Handle "Privacy Policy" tap
-                                    },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      Button(
-                          label: AppLocalizations.of(context)!.signUp,
-                          onPressed: () {
-                            handleSignUP();
-                          },
-                          isDisabled: phoneNumberController.text.isEmpty ||
-                              passwordController.text.isEmpty ||
-                              fullNameController.text.isEmpty &&
-                                  phoneError != null ||
-                              fullNameError != null ||
-                              passwordError != null),
-                      const SizedBox(height: 24),
-                      Row(
-                        children: <Widget>[
-                          const Expanded(child: Divider()),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(AppLocalizations.of(context)!.or),
-                          ),
-                          const Expanded(child: Divider()),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      const GoogleButton(),
-                      const SizedBox(height: 24),
-                      const GuestButton(),
-                      const SizedBox(height: 24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          return Scaffold(
+            resizeToAvoidBottomInset: true,
+            body: Material(
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+                child: SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 24),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.alreadyHaveAnAccount,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            AppLocalizations.of(context)!.createAccount,
+                            style: Theme.of(context).textTheme.headlineLarge,
+                            textAlign: TextAlign.start,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginScreen()));
+                          const SizedBox(height: 8),
+                          Text(
+                            AppLocalizations.of(context)!.letsCreateAccount,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          const SizedBox(height: 24),
+                          Input(
+                            label: AppLocalizations.of(context)!.fullName,
+                            hint: AppLocalizations.of(context)!.enterFullName,
+                            error: fullNameError,
+                            onChanged: (value) {
+                              setState(() {
+                                fullNameError =
+                                    Validator.validateFullName(context, value);
+                              });
                             },
-                            child: Text(
-                              AppLocalizations.of(context)!.login,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(color: Colors.blue),
-                            ),
+                            controller: fullNameController,
                           ),
+                          Input(
+                            label: AppLocalizations.of(context)!.phoneNumber,
+                            hint:
+                                AppLocalizations.of(context)!.enterPhoneNumber,
+                            maxLength: 10,
+                            controller: phoneNumberController,
+                            error: phoneError,
+                            onChanged: (value) {
+                              setState(() {
+                                phoneError = Validator.validatePhoneNumber(
+                                    context, value);
+                              });
+                            },
+                            keyboardType: TextInputType.phone,
+                          ),
+                          Input(
+                            label: AppLocalizations.of(context)!.password,
+                            hint: AppLocalizations.of(context)!.enterPassword,
+                            controller: passwordController,
+                            isPassword: true,
+                            showPassword: showPassword,
+                            error: passwordError,
+                            onChanged: (value) {
+                              setState(() {
+                                passwordError =
+                                    Validator.validatePassword(context, value);
+                              });
+                            },
+                            togglePasswordVisibility: () {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            },
+                          ),
+                          Wrap(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: AppLocalizations.of(context)!
+                                          .bySigningUp,
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    TextSpan(
+                                      text: AppLocalizations.of(context)!
+                                          .termsOfService,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Colors.blue,
+                                          ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          // TODO: Handle "Terms of Service" tap
+                                        },
+                                    ),
+                                    TextSpan(
+                                      text: AppLocalizations.of(context)!.and,
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    TextSpan(
+                                      text: AppLocalizations.of(context)!
+                                          .privacyPolicy,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Colors.blue,
+                                          ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          // TODO: Handle "Privacy Policy" tap
+                                        },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          Button(
+                              label: AppLocalizations.of(context)!.signUp,
+                              onPressed: () {
+                                handleSignUP();
+                              },
+                              isDisabled: state.isLoading ||
+                                  phoneNumberController.text.isEmpty ||
+                                  passwordController.text.isEmpty ||
+                                  fullNameController.text.isEmpty ||
+                                  phoneError != null ||
+                                  fullNameError != null ||
+                                  passwordError != null),
+                          if (state.isLoading)
+                            LinearProgressIndicator(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          const SizedBox(height: 24),
+                          Row(
+                            children: <Widget>[
+                              const Expanded(child: Divider()),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(AppLocalizations.of(context)!.or),
+                              ),
+                              const Expanded(child: Divider()),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          const GoogleButton(),
+                          const SizedBox(height: 24),
+                          const GuestButton(),
+                          const SizedBox(height: 24),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .alreadyHaveAnAccount,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginScreen()));
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.login,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(color: Colors.blue),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

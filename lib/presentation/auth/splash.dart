@@ -1,4 +1,5 @@
 import 'package:bongtuyettrang/presentation/auth/register.dart';
+import 'package:bongtuyettrang/presentation/home/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -90,7 +91,8 @@ class Onboarding extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const RegisterScreen(),
+                      builder: (context) => const HomeScreen(),
+                      // builder: (context) => const RegisterScreen(),
                     ),
                   );
                 },

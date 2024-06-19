@@ -22,12 +22,10 @@ class AuthenticationRepository {
     required String phoneNumber,
     required String password,
   }) async {
-    print('Repository login data: $phoneNumber, $password');
     final response = await apiClient.dio.post('/login', data: {
       'phoneNumber': phoneNumber,
       'password': password,
     });
-    print('Repository login response: ${response.data}');
     return UserResponse.fromJson(response.data);
   }
 }
