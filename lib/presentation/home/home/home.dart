@@ -1,4 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:bongtuyettrang/presentation/home/account/account.dart';
+import 'package:bongtuyettrang/presentation/home/cart/cart.dart';
+import 'package:bongtuyettrang/presentation/home/saved/saved.dart';
+import 'package:bongtuyettrang/presentation/home/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Scaffold(
             backgroundColor: Colors.white,
-            body: [
+            body: <Widget>[
               CustomScrollView(
                 physics: const BouncingScrollPhysics(),
                 slivers: [
@@ -165,7 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisCount: 2,
                         childAspectRatio: 1.5,
                       ),
-                      delegate: SliverChildBuilderDelegate((context, int index) {
+                      delegate:
+                          SliverChildBuilderDelegate((context, int index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
@@ -178,18 +182,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       }, childCount: 20))
                 ],
               ),
-              Center(
-                child: Text(AppLocalizations.of(context)!.search),
-              ),
-              Center(
-                child: Text(AppLocalizations.of(context)!.saved),
-              ),
-              Center(
-                child: Text(AppLocalizations.of(context)!.cart),
-              ),
-              Center(
-                child: Text(AppLocalizations.of(context)!.account),
-              ),
+              const SearchScreen(),
+              const SavedScreen(),
+              const CartScreen(),
+              const AccountScreen()
             ][selectedIndex],
             bottomNavigationBar: NavigationBar(
               onDestinationSelected: (index) {

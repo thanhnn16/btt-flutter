@@ -1,31 +1,21 @@
 import 'dart:async';
-import 'package:bongtuyettrang/data/responses/auth/user_response.dart';
+import 'package:bongtuyettrang/data/responses/auth/auth_response.dart';
+import 'package:bongtuyettrang/domain/requests/auth/login_request.dart';
+import 'package:bongtuyettrang/domain/requests/auth/register_request.dart';
 import '../dio/api_client.dart';
 
 class AuthenticationRepository {
   final apiClient = ApiClient();
 
-  Future<UserResponse> signUp({
-    required String fullName,
-    required String phoneNumber,
-    required String password,
-  }) async {
-    final response = await apiClient.dio.post('/register', data: {
-      'fullName': fullName,
-      'phoneNumber': phoneNumber,
-      'password': password,
-    });
-    return UserResponse.fromJson(response.data);
+  Future<AuthResponse> signUp(RegisterRequest registerRequest) async {
+    final response =
+        await apiClient.dio.post('/register', data: registerRequest.toJson());
+    return AuthResponse.fromJson(response.data);
   }
 
-  Future<UserResponse> login({
-    required String phoneNumber,
-    required String password,
-  }) async {
-    final response = await apiClient.dio.post('/login', data: {
-      'phoneNumber': phoneNumber,
-      'password': password,
-    });
-    return UserResponse.fromJson(response.data);
+  Future<AuthResponse> login(LoginRequest loginRequest) async {
+    final response =
+        await apiClient.dio.post('/login', data: loginRequest.toJson());
+    return AuthResponse.fromJson(response.data);
   }
 }

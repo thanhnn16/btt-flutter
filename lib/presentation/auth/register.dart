@@ -1,3 +1,5 @@
+import 'package:bongtuyettrang/domain/requests/auth/register_request.dart';
+import 'package:bongtuyettrang/presentation/home/home/home.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,15 +19,12 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController fullNameController = TextEditingController(
-    text: "Nguyễn Thành"
-  );
-  TextEditingController phoneNumberController = TextEditingController(
-    text: "0346542636"
-  );
-  TextEditingController passwordController = TextEditingController(
-    text: "123456"
-  );
+  TextEditingController fullNameController =
+      TextEditingController(text: "Nguyễn Thành");
+  TextEditingController phoneNumberController =
+      TextEditingController(text: "0346542636");
+  TextEditingController passwordController =
+      TextEditingController(text: "123456");
 
   late bool showPassword;
 
@@ -41,18 +40,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void handleSignUP() {
     final authCubit = context.read<AuthCubit>();
-    authCubit.signUp(
+    authCubit.signUp(RegisterRequest(
       fullName: fullNameController.text,
       phoneNumber: phoneNumberController.text,
       password: passwordController.text,
-    );
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (BuildContext context, AuthState state) {
-        if (state.user.id.isNotEmpty) {
+        if (state.token.isNotEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("Sign up successfully"),
@@ -62,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const LoginScreen(),
+              builder: (context) => const HomeScreen(),
             ),
           );
         }

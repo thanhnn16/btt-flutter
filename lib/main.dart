@@ -6,14 +6,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'data/network/repository/authentication_repository.dart';
-import 'data/network/repository/user_repository.dart';
 
 void main() {
   runApp(MultiBlocProvider(providers: [
     BlocProvider(
       create: (context) => AuthCubit(
         authenticationRepository: AuthenticationRepository(),
-        userRepository: UserRepository(),
       ),
     ),
   ], child: const MyApp()));

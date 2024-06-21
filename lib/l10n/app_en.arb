@@ -33,6 +33,8 @@
   "login": "Log in",
   "loginToYourAccount": "Log in to your account",
   "itsGreatToSeeYouAgain": "It's great to see you again!",
+  "loginSuccess": "Login success",
+  "loginFailed": "Login failed",
   "forgotPassword": "Forgot your password?",
   "resetPassword": "Reset your password",
   "noAccount": "Don't have an account?",

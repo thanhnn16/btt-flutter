@@ -1,17 +1,17 @@
 part of 'auth_cubit.dart';
 
 class AuthState {
-  final User user;
+  final String token;
   final bool isLoading;
 
-  AuthState({required this.user, this.isLoading = false});
+  AuthState({required this.token, this.isLoading = false});
 
   AuthState copyWith({
-    User? user,
+    String? token,
     bool? isLoading,
   }) {
     return AuthState(
-      user: user ?? this.user,
+      token: token ?? this.token,
       isLoading: isLoading ?? this.isLoading,
     );
   }

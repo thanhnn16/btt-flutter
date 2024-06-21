@@ -33,6 +33,8 @@
   "login": "Đăng nhập",
   "loginToYourAccount": "Đăng nhập vào tài khoản của bạn",
   "itsGreatToSeeYouAgain": "Rất vui khi gặp lại bạn!",
+  "loginSuccess": "Đăng nhập thành công",
+  "loginFailed": "Đăng nhập thất bại",
   "forgotPassword": "Quên mật khẩu?",
   "resetPassword": "Đặt lại mật khẩu",
   "noAccount": "Chưa có tài khoản?",

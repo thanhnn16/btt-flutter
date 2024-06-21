@@ -1,3 +1,4 @@
+import 'package:bongtuyettrang/domain/requests/auth/login_request.dart';
 import 'package:bongtuyettrang/presentation/auth/register.dart';
 import 'package:bongtuyettrang/presentation/home/home/home.dart';
 import 'package:flutter/gestures.dart';
@@ -37,17 +38,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void handleLogin() {
     final authCubit = context.read<AuthCubit>();
-    authCubit.login(
-      phoneNumber: phoneNumberController.text,
-      password: passwordController.text,
-    );
+    authCubit.login(LoginRequest(
+        phoneNumber: phoneNumberController.text,
+        password: passwordController.text));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state.user.id.isNotEmpty) {
+        if (state.token.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.loginSuccess),
+            ),
+          );
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -81,14 +86,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              AppLocalizations.of(context)!.itsGreatToSeeYouAgain,
+                              AppLocalizations.of(context)!
+                                  .itsGreatToSeeYouAgain,
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             const SizedBox(height: 24),
                             Input(
                               label: AppLocalizations.of(context)!.phoneNumber,
-                              hint:
-                                  AppLocalizations.of(context)!.enterPhoneNumber,
+                              hint: AppLocalizations.of(context)!
+                                  .enterPhoneNumber,
                               controller: phoneNumberController,
                               keyboardType: TextInputType.phone,
                               maxLength: 10,
@@ -113,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               onChanged: (value) {
                                 setState(() {
-                                  passwordError =
-                                      Validator.validatePassword(context, value);
+                                  passwordError = Validator.validatePassword(
+                                      context, value);
                                 });
                               },
                               error: passwordError,
@@ -127,8 +133,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       TextSpan(
                                         text:
                                             '${AppLocalizations.of(context)!.forgotPassword} ',
-                                        style:
-                                            Theme.of(context).textTheme.bodySmall,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
                                       ),
                                       TextSpan(
                                         text: AppLocalizations.of(context)!
@@ -160,16 +167,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                     passwordController.text.isEmpty ||
                                     phoneError != null ||
                                     passwordError != null),
-                            if (state.isLoading) LinearProgressIndicator(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                            if (state.isLoading)
+                              LinearProgressIndicator(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                             const SizedBox(height: 24),
                             Row(
                               children: <Widget>[
                                 const Expanded(child: Divider()),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
                                   child: Text(AppLocalizations.of(context)!.or),
                                 ),
                                 const Expanded(child: Divider()),
