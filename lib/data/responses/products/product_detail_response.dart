@@ -14,4 +14,9 @@ class ProductDetailResponse {
     required this.message,
     required this.product,
   });
+
+  factory ProductDetailResponse.fromJson(Map<String, dynamic> json) =>
+      _$ProductDetailResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProductDetailResponseToJson(this);
 }

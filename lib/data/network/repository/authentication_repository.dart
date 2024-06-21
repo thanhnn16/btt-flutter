@@ -9,13 +9,13 @@ class AuthenticationRepository {
 
   Future<AuthResponse> signUp(RegisterRequest registerRequest) async {
     final response =
-        await apiClient.dio.post('/register', data: registerRequest.toJson());
+        await apiClient.dio.post('/auth/register', data: registerRequest.toJson());
     return AuthResponse.fromJson(response.data);
   }
 
   Future<AuthResponse> login(LoginRequest loginRequest) async {
     final response =
-        await apiClient.dio.post('/login', data: loginRequest.toJson());
+        await apiClient.dio.post('/auth/login', data: loginRequest.toJson());
     return AuthResponse.fromJson(response.data);
   }
 }

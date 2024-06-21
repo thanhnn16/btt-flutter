@@ -5,6 +5,8 @@ import 'package:bongtuyettrang/presentation/home/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'components/product_item.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -36,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (context, BoxConstraints constraints) {
                         double top = constraints.biggest.height;
                         return FlexibleSpaceBar(
-                          title: top < 130
+                          title: top < 140
                               ? Padding(
                                   padding: const EdgeInsets.only(top: 16),
                                   child: Column(
@@ -64,32 +66,66 @@ class _HomeScreenState extends State<HomeScreen> {
                                       const SizedBox(height: 8),
                                       Scrollable(
                                         viewportBuilder: (context, position) {
-                                          return const SingleChildScrollView(
+                                          return SingleChildScrollView(
                                             scrollDirection: Axis.horizontal,
                                             child: Row(
                                               children: [
-                                                SizedBox(width: 16),
-                                                Text('All'),
-                                                SizedBox(width: 16),
-                                                Text('Clothes'),
-                                                SizedBox(width: 16),
-                                                Text('Shoes'),
-                                                SizedBox(width: 16),
-                                                Text('Accessories'),
-                                                SizedBox(width: 16),
-                                                Text('Electronics'),
-                                                SizedBox(width: 16),
-                                                Text('Furniture'),
-                                                SizedBox(width: 16),
-                                                Text('Beauty'),
-                                                SizedBox(width: 16),
-                                                Text('Sports'),
-                                                SizedBox(width: 16),
-                                                Text('Books'),
-                                                SizedBox(width: 16),
-                                                Text('Toys'),
-                                                SizedBox(width: 16),
-                                                Text('Others'),
+                                                const SizedBox(width: 16),
+                                                TextButton(
+                                                  onPressed: () {},
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        const WidgetStatePropertyAll(
+                                                      Colors.white,
+                                                    ),
+                                                    textStyle:
+                                                        const WidgetStatePropertyAll(
+                                                      TextStyle(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    shape:
+                                                        WidgetStatePropertyAll(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        side: const BorderSide(
+                                                          color: Colors.black12,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  child: const Text("All"),
+                                                ),
+                                                const SizedBox(width: 16),
+                                                TextButton(
+                                                  onPressed: () {},
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        const WidgetStatePropertyAll(
+                                                      Colors.white,
+                                                    ),
+                                                    textStyle:
+                                                        const WidgetStatePropertyAll(
+                                                      TextStyle(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    shape:
+                                                        WidgetStatePropertyAll(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        side: const BorderSide(
+                                                          color: Colors.black12,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  child: const Text("Air-Con"),
+                                                ),
                                               ],
                                             ),
                                           );
@@ -103,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fit: StackFit.expand,
                             children: [
                               Positioned(
-                                top: top > 130 ? 50 : 0,
+                                top: top > 140 ? 35 : 0,
                                 left: 24,
                                 right: 24,
                                 child: Column(
@@ -166,18 +202,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 1.5,
+                        childAspectRatio: 0.65,
                       ),
                       delegate:
                           SliverChildBuilderDelegate((context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ListTile(
-                            tileColor: index.isEven
-                                ? Colors.white
-                                : Colors.grey.shade200,
-                            title: Text('Item $index'),
-                          ),
+                        return ProductItem(
+                          productName: 'Product $index',
+                          oldPrice: index % 2 == 0 ? 100 : null,
+                          price: 100.0 - index,
+                          imageUrl:
+                              'https://picsum.photos/200/300?random=$index',
+                          isFavorite: index % 2 == 0,
                         );
                       }, childCount: 20))
                 ],

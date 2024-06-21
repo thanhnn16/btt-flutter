@@ -51,17 +51,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (BuildContext context, AuthState state) {
-        if (state.token.isNotEmpty) {
+        if (state.statusCode == 201) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("Sign up successfully"),
               backgroundColor: Colors.green,
             ),
           );
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
               builder: (context) => const HomeScreen(),
+            ),
+            (route) => false,
+          );
+        } else if (state.statusCode == 422) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Phone number is already in use"),
+              backgroundColor: Colors.red,
             ),
           );
         }
@@ -233,7 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>

@@ -53,11 +53,12 @@ class _LoginScreenState extends State<LoginScreen> {
               content: Text(AppLocalizations.of(context)!.loginSuccess),
             ),
           );
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
               builder: (context) => const HomeScreen(),
             ),
+              (route) => false,
           );
         }
       },
@@ -197,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>

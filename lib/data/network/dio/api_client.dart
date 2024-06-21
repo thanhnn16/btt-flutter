@@ -8,7 +8,7 @@ class ApiClient {
     if (_dio == null) {
       _dio = Dio();
       _dio!.options.baseUrl =
-          'https://666ffd680900b5f87248efdb.mockapi.io/api/';
+          'http://192.168.2.138:8000/api/';
       _dio!.options.connectTimeout = const Duration(seconds: 10);
       _dio!.options.receiveTimeout = const Duration(seconds: 10);
     }
