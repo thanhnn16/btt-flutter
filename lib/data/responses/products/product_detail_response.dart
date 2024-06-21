@@ -1,6 +1,8 @@
 import 'package:bongtuyettrang/domain/models/product/product.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+part 'product_detail_response.g.dart';
+
 @JsonSerializable()
 class ProductDetailResponse {
   final int status;

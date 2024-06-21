@@ -1,10 +1,10 @@
 part of 'auth_cubit.dart';
 
-class AuthState {
+class AuthState extends Equatable {
   final String token;
   final bool isLoading;
 
-  AuthState({required this.token, this.isLoading = false});
+  const AuthState({required this.token, this.isLoading = false});
 
   AuthState copyWith({
     String? token,
@@ -15,4 +15,7 @@ class AuthState {
       isLoading: isLoading ?? this.isLoading,
     );
   }
+
+  @override
+  List<Object?> get props => [token, isLoading];
 }

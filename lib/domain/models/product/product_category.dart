@@ -1,13 +1,8 @@
-// CREATE TABLE product_categories
-// (
-// id            CHAR(36) PRIMARY KEY,
-// category_name VARCHAR(255) NOT NULL,
-// description   TEXT,
-// is_deleted    BOOLEAN  DEFAULT FALSE,
-// created_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
-// updated_at    DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-// );
+import 'package:json_annotation/json_annotation.dart';
 
+part 'product_category.g.dart';
+
+@JsonSerializable()
 class ProductCategory {
   final String id;
   final String categoryName;
@@ -25,12 +20,8 @@ class ProductCategory {
     required this.updatedAt,
   });
 
-  static ProductCategory empty = ProductCategory(
-    id: '',
-    categoryName: '',
-    description: '',
-    isDeleted: false,
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-  );
+  factory ProductCategory.fromJson(Map<String, dynamic> json) =>
+      _$ProductCategoryFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProductCategoryToJson(this);
 }
