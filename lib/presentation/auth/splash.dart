@@ -1,5 +1,6 @@
 import 'package:bongtuyettrang/app/shared/languages/language_cubit.dart';
 import 'package:bongtuyettrang/presentation/auth/register.dart';
+import 'package:bongtuyettrang/presentation/pos/pos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,27 +18,46 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/splash.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Container(
-          alignment: Alignment.bottomCenter,
-          child: const Padding(
-            padding: EdgeInsets.only(bottom: 64.0),
-            child: CircularProgressIndicator(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-    );
+    return FutureBuilder<String?>(
+        future: getToken(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Scaffold(
+              body: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/splash.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Container(
+                  alignment: Alignment.bottomCenter,
+                  child: const Padding(
+                    padding: EdgeInsets.only(bottom: 64.0),
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          } else {
+            if (snapshot.hasData && snapshot.data != null) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const PosScreen()));
+              });
+            } else {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const Onboarding()));
+              });
+            }
+          }
+          return const SizedBox();
+        });
   }
 }
 
@@ -118,7 +138,7 @@ class Onboarding extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   // builder: (context) => const HomeScreen(),
-                                  builder: (context) => const RegisterScreen(),
+                                  builder: (context) => const PosScreen(),
                                 ),
                               );
                             },
