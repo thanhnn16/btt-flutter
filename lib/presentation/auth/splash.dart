@@ -1,5 +1,6 @@
 import 'package:bongtuyettrang/app/shared/languages/language_cubit.dart';
 import 'package:bongtuyettrang/presentation/auth/register.dart';
+// import 'package:bongtuyettrang/presentation/home/home/home.dart';
 import 'package:bongtuyettrang/presentation/pos/pos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -137,8 +138,9 @@ class Onboarding extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
+                                  builder: (context) => const RegisterScreen(),
                                   // builder: (context) => const HomeScreen(),
-                                  builder: (context) => const PosScreen(),
+                                  // builder: (context) => const PosScreen(),
                                 ),
                               );
                             },

@@ -72,6 +72,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
               backgroundColor: Colors.red,
             ),
           );
+        } else if (state.statusCode == 500) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Server error"),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else if (state.statusCode == 401) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Unauthorized"),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       },
       child: BlocBuilder<AuthCubit, AuthState>(

@@ -22,12 +22,16 @@ class AuthCubit extends Cubit<AuthState> {
       final response = await authenticationRepository.login(loginRequest);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('token', response.token ?? '');
+      print('Response: $response');
       emit(AuthState(
           token: response.token ?? '',
           isLoading: false,
           statusCode: response.statusCode));
+      clearStatusCode();
     } catch (e) {
+      print('Error: $e');
       emit(state.copyWith(isLoading: false));
+      clearStatusCode();
     }
   }
 
@@ -35,12 +39,20 @@ class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWith(isLoading: true));
     try {
       final response = await authenticationRepository.signUp(registerRequest);
+      print('Response: $response');
       emit(AuthState(
           token: response.token ?? '',
           isLoading: false,
           statusCode: response.statusCode));
+      clearStatusCode();
     } catch (e) {
+      print('Error: $e');
       emit(state.copyWith(isLoading: false, statusCode: 422));
+      clearStatusCode();
     }
+  }
+
+  void clearStatusCode() {
+    emit(state.copyWith(statusCode: 0));
   }
 }
