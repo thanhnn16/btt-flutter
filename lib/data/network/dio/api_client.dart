@@ -7,8 +7,9 @@ class ApiClient {
   factory ApiClient() {
     if (_dio == null) {
       _dio = Dio();
-      _dio!.options.baseUrl =
-          'http://192.168.2.138:8000/api';
+          // 'http://192.168.2.138:8000/api';
+      _dio!.options.baseUrl = 'https://hs1olabx9a.sharedwithexpose.com/api';
+      _dio!.options.contentType = Headers.jsonContentType;
       _dio!.options.connectTimeout = const Duration(seconds: 10);
       _dio!.options.receiveTimeout = const Duration(seconds: 10);
     }

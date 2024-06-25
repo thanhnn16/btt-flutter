@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bongtuyettrang/domain/requests/auth/login_request.dart';
 import 'package:bongtuyettrang/domain/requests/auth/register_request.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,14 +23,18 @@ class AuthCubit extends Cubit<AuthState> {
       final response = await authenticationRepository.login(loginRequest);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('token', response.token ?? '');
-      print('Response: $response');
+      if (kDebugMode) {
+        print('Response: $response');
+      }
       emit(AuthState(
           token: response.token ?? '',
           isLoading: false,
           statusCode: response.statusCode));
       clearStatusCode();
     } catch (e) {
-      print('Error: $e');
+      if (kDebugMode) {
+        print('Error: $e');
+      }
       emit(state.copyWith(isLoading: false));
       clearStatusCode();
     }
@@ -39,14 +44,18 @@ class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWith(isLoading: true));
     try {
       final response = await authenticationRepository.signUp(registerRequest);
-      print('Response: $response');
+      if (kDebugMode) {
+        print('Response: $response');
+      }
       emit(AuthState(
           token: response.token ?? '',
           isLoading: false,
           statusCode: response.statusCode));
       clearStatusCode();
     } catch (e) {
-      print('Error: $e');
+      if (kDebugMode) {
+        print('Error: $e');
+      }
       emit(state.copyWith(isLoading: false, statusCode: 422));
       clearStatusCode();
     }

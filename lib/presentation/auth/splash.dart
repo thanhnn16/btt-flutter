@@ -1,7 +1,6 @@
 import 'package:bongtuyettrang/app/shared/languages/language_cubit.dart';
 import 'package:bongtuyettrang/presentation/auth/register.dart';
-// import 'package:bongtuyettrang/presentation/home/home/home.dart';
-import 'package:bongtuyettrang/presentation/pos/pos.dart';
+import 'package:bongtuyettrang/presentation/home/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -48,7 +47,7 @@ class SplashScreen extends StatelessWidget {
             if (snapshot.hasData && snapshot.data != null) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const PosScreen()));
+                    MaterialPageRoute(builder: (context) => const HomeScreen()));
               });
             } else {
               WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -107,8 +106,8 @@ class Onboarding extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
-                          child: InkWell(
-                            onTap: () {
+                          child: TextButton(
+                            onPressed: () {
                               if (state.locale.languageCode == 'en') {
                                 context
                                     .read<LanguageCubit>()
@@ -119,15 +118,13 @@ class Onboarding extends StatelessWidget {
                                     .changeLanguage(const Locale('en'));
                               }
                             },
-                            child: Image(
-                              width: 48,
-                              height: 48,
-                              fit: BoxFit.contain,
-                              image: state.locale.languageCode == 'en'
-                                  ? const AssetImage(
-                                      'assets/icons/common/vn.png')
-                                  : const AssetImage(
-                                      'assets/icons/common/en.png'),
+                            child: Text(
+                              state.locale.languageCode == 'en'
+                                  ? 'VI'
+                                  : 'EN',
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),

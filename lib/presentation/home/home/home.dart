@@ -2,6 +2,7 @@ import 'package:bongtuyettrang/domain/models/product/product_category.dart';
 import 'package:bongtuyettrang/gen/assets.gen.dart';
 import 'package:bongtuyettrang/presentation/home/account/account.dart';
 import 'package:bongtuyettrang/presentation/home/cart/cart.dart';
+import 'package:bongtuyettrang/presentation/home/notification/notification.dart';
 import 'package:bongtuyettrang/presentation/home/saved/saved.dart';
 import 'package:bongtuyettrang/presentation/home/search/search.dart';
 import 'package:flutter/material.dart';
@@ -167,7 +168,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 24,
                                             )),
                                         IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const NotificationScreen(),
+                                              ),
+                                            );
+                                          },
                                           icon: SvgPicture.asset(
                                             Assets
                                                 .icons.common.notification.path,
@@ -210,13 +219,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: const Text("All"),
                                           ),
                                           const SizedBox(width: 4),
-                                          ...categories
-                                              .map(
-                                                (category) =>
-                                                    ProductCategoryItems(
-                                                        category: category),
-                                              )
-                                              .toList(),
+                                          ...categories.map(
+                                            (category) => ProductCategoryItems(
+                                                category: category),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -242,7 +248,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .headlineLarge,
                                     )),
                                     IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const NotificationScreen(),
+                                          ),
+                                        );
+                                      },
                                       icon: SvgPicture.asset(
                                         Assets.icons.common.notification.path,
                                         height: 24,
@@ -277,7 +291,147 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     )),
                                     IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                              context: context,
+                                              showDragHandle: true,
+                                              useSafeArea: true,
+                                              builder: (context) {
+                                                return SingleChildScrollView(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0),
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            IconButton(
+                                                              onPressed: () {},
+                                                              icon: SvgPicture.asset(
+                                                                Assets.icons.common.filter.path,
+                                                                height: 24,
+                                                                width: 24,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              AppLocalizations.of(context)!.filter,
+                                                              style: Theme.of(context).textTheme.headlineMedium,
+                                                            ),
+                                                            IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(height: 16),
+                                                        const Divider(),
+                                                        const SizedBox(height: 16),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              // TODO
+                                                              // AppLocalizations.of(context)!.priceRange,
+                                                              'Price Range',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                            Text(
+                                                              '\$0 - \$100',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(height: 16),
+                                                        const Divider(),
+                                                        const SizedBox(height: 16),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              //  TODO
+                                                              // AppLocalizations.of(context)!.rating,
+                                                              'Rating',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                            Text(
+                                                              '4.5',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(height: 16),
+                                                        const Divider(),
+                                                        const SizedBox(height: 16),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              // TODO
+                                                              // AppLocalizations.of(context)!.brand,
+                                                              'Brand',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                            Text(
+                                                              'Samsung',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(height: 16),
+                                                        const Divider(),
+                                                        const SizedBox(height: 16),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              // TODO:
+                                                              // AppLocalizations.of(context)!.color,
+                                                              'Color',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                            Text(
+                                                              'Black',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(height: 16),
+                                                        const Divider(),
+                                                        const SizedBox(height: 16),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              // TODO
+                                                              // AppLocalizations.of(context)!.size,
+                                                              'Size',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                            Text(
+                                                              'Large',
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(height: 16),
+                                                        const Divider(),
+                                                        const SizedBox(height: 16),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              AppLocalizations.of(context)!.clearAll,
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                            Text(
+                                                              AppLocalizations.of(context)!.apply,
+                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        },
                                         icon: SvgPicture.asset(
                                           Assets.icons.common.filter.path,
                                           height: 52,
@@ -408,7 +562,100 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {},
+              onPressed: () {
+                showAdaptiveDialog(
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) {
+                  return AlertDialog(
+                    backgroundColor: Colors.white,
+                    title: Text(AppLocalizations.of(context)!.bookAppointment),
+                    content: Column(
+                      children: [
+                        const Text('We will contact you to confirm the booking'),
+                        const SizedBox(height: 16),
+                        const Text('Select service category'),
+                        const SizedBox(height: 16),
+                        DropdownButton(
+                          isExpanded: true,
+                            items: const [
+                              DropdownMenuItem(
+                                value: 'Service 1',
+                                child: Text('Service 1'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'Service 2',
+                                child: Text('Service 2'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'Service 3',
+                                child: Text('Service 3'),
+                              ),
+                            ],
+                             onChanged: (value) {
+
+                             }),
+                        const SizedBox(height: 16),
+                        const Text('Select service'),
+                        const SizedBox(height: 16),
+                        DropdownButton(
+                            items: const [
+                              DropdownMenuItem(
+                                value: 'Service 1',
+                                child: Text('Service 1'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'Service 2',
+                                child: Text('Service 2'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'Service 3',
+                                child: Text('Service 3'),
+                              ),
+                            ],
+                             onChanged: (value) {
+
+                             }),
+                        const SizedBox(height: 16),
+                        const Text('Select date'),
+                        const SizedBox(height: 16),
+                        DropdownButton(
+                            items: const [
+                              DropdownMenuItem(
+                                value: 'Date 1',
+                                child: Text('Date 1'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'Date 2',
+                                child: Text('Date 2'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'Date 3',
+                                child: Text('Date 3'),
+                              ),
+                            ],
+                             onChanged: (value) {
+
+                             }),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(AppLocalizations.of(context)!.noCancel),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(AppLocalizations.of(context)!.yes),
+                      ),
+                    ],
+                  );
+                });
+              },
               tooltip: AppLocalizations.of(context)!.bookAppointment,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(100),
@@ -457,5 +704,156 @@ class ProductCategoryItems extends StatelessWidget {
         child: Text(category.categoryName),
       ),
     );
+  }
+}
+
+class FilterSheet extends StatelessWidget {
+  const FilterSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+        initialChildSize: 0.6,
+        minChildSize: 0.1,
+        maxChildSize: 0.6,
+        builder: (context, scrollController) {
+          return SingleChildScrollView(
+            controller: scrollController,
+            child: SizedBox(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: SvgPicture.asset(
+                            Assets.icons.common.filter.path,
+                            height: 24,
+                            width: 24,
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.filter,
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          // TODO
+                          // AppLocalizations.of(context)!.priceRange,
+                          'Price Range',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Text(
+                          '\$0 - \$100',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          //  TODO
+                          // AppLocalizations.of(context)!.rating,
+                          'Rating',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Text(
+                          '4.5',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          // TODO
+                          // AppLocalizations.of(context)!.brand,
+                          'Brand',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Text(
+                          'Samsung',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          // TODO:
+                          // AppLocalizations.of(context)!.color,
+                          'Color',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Text(
+                          'Black',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          // TODO
+                          // AppLocalizations.of(context)!.size,
+                          'Size',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Text(
+                          'Large',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.clearAll,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.apply,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
