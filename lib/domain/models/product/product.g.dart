@@ -8,24 +8,24 @@ part of 'product.dart';
 
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       id: json['id'] as String,
-      productName: json['productName'] as String,
-      productPrice: (json['productPrice'] as num).toDouble(),
-      productDescription: json['productDescription'] as String?,
-      categoryId: json['categoryId'] as String?,
+      productName: json['product_name'] as String,
+      productPrice: (json['product_price'] as num).toDouble(),
+      productDescription: json['product_description'] as String?,
+      categoryId: json['category_id'] as String?,
       status: json['status'] as String,
-      isDeleted: json['isDeleted'] as bool,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      modifiedAt: DateTime.parse(json['modifiedAt'] as String),
+      isDeleted: json['is_deleted'] as bool,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      modifiedAt: DateTime.parse(json['modified_at'] as String),
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'id': instance.id,
-      'productName': instance.productName,
-      'productPrice': instance.productPrice,
-      'productDescription': instance.productDescription,
-      'categoryId': instance.categoryId,
+      'product_name': instance.productName,
+      'product_price': instance.productPrice,
+      'product_description': instance.productDescription,
+      'category_id': instance.categoryId,
       'status': instance.status,
-      'isDeleted': instance.isDeleted,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'modifiedAt': instance.modifiedAt.toIso8601String(),
+      'is_deleted': instance.isDeleted,
+      'created_at': instance.createdAt.toIso8601String(),
+      'modified_at': instance.modifiedAt.toIso8601String(),
     };

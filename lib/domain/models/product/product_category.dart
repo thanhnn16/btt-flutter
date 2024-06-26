@@ -5,10 +5,14 @@ part 'product_category.g.dart';
 @JsonSerializable()
 class ProductCategory {
   final String id;
+@JsonKey(name: 'category_name')
   final String categoryName;
   final String description;
+@JsonKey(name: 'is_deleted')
   final bool isDeleted;
+@JsonKey(name: 'created_at')
   final DateTime createdAt;
+@JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
   ProductCategory({

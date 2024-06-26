@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../service/appointment/appointment.dart';
 import 'components/product_item.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -299,130 +300,215 @@ class _HomeScreenState extends State<HomeScreen> {
                                               builder: (context) {
                                                 return SingleChildScrollView(
                                                   child: Padding(
-                                                    padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 16.0,
+                                                            right: 16.0,
+                                                            bottom: 24.0),
                                                     child: Column(
                                                       children: [
                                                         Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
                                                             IconButton(
                                                               onPressed: () {},
-                                                              icon: SvgPicture.asset(
-                                                                Assets.icons.common.filter.path,
+                                                              icon: SvgPicture
+                                                                  .asset(
+                                                                Assets
+                                                                    .icons
+                                                                    .common
+                                                                    .filter
+                                                                    .path,
                                                                 height: 24,
                                                                 width: 24,
                                                               ),
                                                             ),
                                                             Text(
-                                                              AppLocalizations.of(context)!.filter,
-                                                              style: Theme.of(context).textTheme.headlineMedium,
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .filter,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineMedium,
                                                             ),
-                                                            IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+                                                            IconButton(
+                                                                onPressed:
+                                                                    () {},
+                                                                icon: const Icon(
+                                                                    Icons
+                                                                        .close)),
                                                           ],
                                                         ),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         const Divider(),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
                                                             Text(
                                                               // TODO
                                                               // AppLocalizations.of(context)!.priceRange,
                                                               'Price Range',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                             Text(
                                                               '\$0 - \$100',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                           ],
                                                         ),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         const Divider(),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
                                                             Text(
                                                               //  TODO
                                                               // AppLocalizations.of(context)!.rating,
                                                               'Rating',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                             Text(
                                                               '4.5',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                           ],
                                                         ),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         const Divider(),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
                                                             Text(
                                                               // TODO
                                                               // AppLocalizations.of(context)!.brand,
                                                               'Brand',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                             Text(
                                                               'Samsung',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                           ],
                                                         ),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         const Divider(),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
                                                             Text(
                                                               // TODO:
                                                               // AppLocalizations.of(context)!.color,
                                                               'Color',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                             Text(
                                                               'Black',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                           ],
                                                         ),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         const Divider(),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
                                                             Text(
                                                               // TODO
                                                               // AppLocalizations.of(context)!.size,
                                                               'Size',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                             Text(
                                                               'Large',
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                           ],
                                                         ),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         const Divider(),
-                                                        const SizedBox(height: 16),
+                                                        const SizedBox(
+                                                            height: 16),
                                                         Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
                                                             Text(
-                                                              AppLocalizations.of(context)!.clearAll,
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .clearAll,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                             Text(
-                                                              AppLocalizations.of(context)!.apply,
-                                                              style: Theme.of(context).textTheme.headlineSmall,
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .apply,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall,
                                                             ),
                                                           ],
                                                         ),
@@ -563,98 +649,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
-                showAdaptiveDialog(
-                    context: context,
-                    useSafeArea: true,
-                    builder: (context) {
-                  return AlertDialog(
-                    backgroundColor: Colors.white,
-                    title: Text(AppLocalizations.of(context)!.bookAppointment),
-                    content: Column(
-                      children: [
-                        const Text('We will contact you to confirm the booking'),
-                        const SizedBox(height: 16),
-                        const Text('Select service category'),
-                        const SizedBox(height: 16),
-                        DropdownButton(
-                          isExpanded: true,
-                            items: const [
-                              DropdownMenuItem(
-                                value: 'Service 1',
-                                child: Text('Service 1'),
-                              ),
-                              DropdownMenuItem(
-                                value: 'Service 2',
-                                child: Text('Service 2'),
-                              ),
-                              DropdownMenuItem(
-                                value: 'Service 3',
-                                child: Text('Service 3'),
-                              ),
-                            ],
-                             onChanged: (value) {
-
-                             }),
-                        const SizedBox(height: 16),
-                        const Text('Select service'),
-                        const SizedBox(height: 16),
-                        DropdownButton(
-                            items: const [
-                              DropdownMenuItem(
-                                value: 'Service 1',
-                                child: Text('Service 1'),
-                              ),
-                              DropdownMenuItem(
-                                value: 'Service 2',
-                                child: Text('Service 2'),
-                              ),
-                              DropdownMenuItem(
-                                value: 'Service 3',
-                                child: Text('Service 3'),
-                              ),
-                            ],
-                             onChanged: (value) {
-
-                             }),
-                        const SizedBox(height: 16),
-                        const Text('Select date'),
-                        const SizedBox(height: 16),
-                        DropdownButton(
-                            items: const [
-                              DropdownMenuItem(
-                                value: 'Date 1',
-                                child: Text('Date 1'),
-                              ),
-                              DropdownMenuItem(
-                                value: 'Date 2',
-                                child: Text('Date 2'),
-                              ),
-                              DropdownMenuItem(
-                                value: 'Date 3',
-                                child: Text('Date 3'),
-                              ),
-                            ],
-                             onChanged: (value) {
-
-                             }),
-                      ],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(AppLocalizations.of(context)!.noCancel),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(AppLocalizations.of(context)!.yes),
-                      ),
-                    ],
-                  );
-                });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AppointmentScreen()));
               },
               tooltip: AppLocalizations.of(context)!.bookAppointment,
               shape: RoundedRectangleBorder(
@@ -740,7 +738,8 @@ class FilterSheet extends StatelessWidget {
                           AppLocalizations.of(context)!.filter,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
-                        IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+                        IconButton(
+                            onPressed: () {}, icon: const Icon(Icons.close)),
                       ],
                     ),
                     const SizedBox(height: 16),

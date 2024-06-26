@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
             MaterialPageRoute(
               builder: (context) => const HomeScreen(),
             ),
-              (route) => false,
+            (route) => false,
           );
         }
       },
@@ -149,7 +149,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             ),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
-                                            // Handle "Terms of Service" tap here
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const HomeScreen()));
                                           },
                                       ),
                                     ],

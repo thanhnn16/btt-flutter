@@ -8,19 +8,19 @@ part of 'product_image.dart';
 
 ProductImage _$ProductImageFromJson(Map<String, dynamic> json) => ProductImage(
       id: json['id'] as String,
-      productId: json['productId'] as String,
-      imagePath: json['imagePath'] as String,
-      isDeleted: json['isDeleted'] as bool,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      productId: json['product_id'] as String,
+      imagePath: json['image_path'] as String,
+      isDeleted: json['is_deleted'] as bool,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
     );
 
 Map<String, dynamic> _$ProductImageToJson(ProductImage instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'productId': instance.productId,
-      'imagePath': instance.imagePath,
-      'isDeleted': instance.isDeleted,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'updatedAt': instance.updatedAt.toIso8601String(),
+      'product_id': instance.productId,
+      'image_path': instance.imagePath,
+      'is_deleted': instance.isDeleted,
+      'created_at': instance.createdAt.toIso8601String(),
+      'updated_at': instance.updatedAt.toIso8601String(),
     };

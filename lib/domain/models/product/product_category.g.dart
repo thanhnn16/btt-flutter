@@ -9,19 +9,19 @@ part of 'product_category.dart';
 ProductCategory _$ProductCategoryFromJson(Map<String, dynamic> json) =>
     ProductCategory(
       id: json['id'] as String,
-      categoryName: json['categoryName'] as String,
+      categoryName: json['category_name'] as String,
       description: json['description'] as String,
-      isDeleted: json['isDeleted'] as bool,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      isDeleted: json['is_deleted'] as bool,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
     );
 
 Map<String, dynamic> _$ProductCategoryToJson(ProductCategory instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'categoryName': instance.categoryName,
+      'category_name': instance.categoryName,
       'description': instance.description,
-      'isDeleted': instance.isDeleted,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'updatedAt': instance.updatedAt.toIso8601String(),
+      'is_deleted': instance.isDeleted,
+      'created_at': instance.createdAt.toIso8601String(),
+      'updated_at': instance.updatedAt.toIso8601String(),
     };

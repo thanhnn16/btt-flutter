@@ -5,13 +5,20 @@ part 'product.g.dart';
 @JsonSerializable()
 class Product {
   final String id;
+  @JsonKey(name: 'product_name')
   final String productName;
+  @JsonKey(name: 'product_price')
   final double productPrice;
+  @JsonKey(name: 'product_description')
   final String? productDescription;
+  @JsonKey(name: 'category_id')
   final String? categoryId;
   final String status;
+  @JsonKey(name: 'is_deleted')
   final bool isDeleted;
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
+  @JsonKey(name: 'modified_at')
   final DateTime modifiedAt;
 
   const Product({

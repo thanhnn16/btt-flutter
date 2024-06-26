@@ -1,6 +1,7 @@
 import 'package:bongtuyettrang/app/shared/languages/language_cubit.dart';
 import 'package:bongtuyettrang/presentation/auth/cubit/auth_cubit.dart';
 import 'package:bongtuyettrang/presentation/auth/splash.dart';
+import 'package:bongtuyettrang/presentation/service/appointment/cubit/appointment_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,6 +9,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/network/repository/authentication_repository.dart';
+import 'data/network/repository/services/service_category_repository.dart';
+import 'data/network/repository/services/service_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +22,13 @@ Future<void> main() async {
         authenticationRepository: AuthenticationRepository(),
       ),
     ),
-    BlocProvider(create: (context) => LanguageCubit(prefs))
+    BlocProvider(create: (context) => LanguageCubit(prefs)),
+    BlocProvider(
+      create: (context) => AppointmentCubit(
+        serviceCategoryRepository: ServiceCategoryRepository(),
+        serviceRepository: ServiceRepository(),
+      ),
+    )
   ], child: const MyApp()));
 }
 
