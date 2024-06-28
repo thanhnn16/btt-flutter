@@ -10,7 +10,7 @@ class ProductImage {
   @JsonKey(name: 'image_path')
   final String imagePath;
   @JsonKey(name: 'is_deleted')
-  final bool isDeleted;
+  final int isDeleted;
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

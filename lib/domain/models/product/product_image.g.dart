@@ -10,7 +10,7 @@ ProductImage _$ProductImageFromJson(Map<String, dynamic> json) => ProductImage(
       id: json['id'] as String,
       productId: json['product_id'] as String,
       imagePath: json['image_path'] as String,
-      isDeleted: json['is_deleted'] as bool,
+      isDeleted: (json['is_deleted'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );

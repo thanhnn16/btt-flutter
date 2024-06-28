@@ -13,7 +13,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       productDescription: json['product_description'] as String?,
       categoryId: json['category_id'] as String?,
       status: json['status'] as String,
-      isDeleted: json['is_deleted'] as bool,
+      isDeleted: (json['is_deleted'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
       modifiedAt: DateTime.parse(json['modified_at'] as String),
     );

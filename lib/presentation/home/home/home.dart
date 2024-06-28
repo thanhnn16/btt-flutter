@@ -1,15 +1,15 @@
 import 'package:bongtuyettrang/domain/models/product/product_category.dart';
 import 'package:bongtuyettrang/gen/assets.gen.dart';
 import 'package:bongtuyettrang/presentation/home/account/account.dart';
-import 'package:bongtuyettrang/presentation/home/cart/cart.dart';
 import 'package:bongtuyettrang/presentation/home/notification/notification.dart';
-import 'package:bongtuyettrang/presentation/home/saved/saved.dart';
-import 'package:bongtuyettrang/presentation/home/search/search.dart';
+import 'package:bongtuyettrang/presentation/home/shop/shop.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../service/appointment/appointment.dart';
+import '../../service/appointment/book_appointment.dart';
+import '../appointment/appointment.dart';
 import 'components/product_item.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,106 +22,34 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
+  final fabKey = GlobalKey();
+
   // mock category list
   final List<ProductCategory> categories = [
     ProductCategory(
-        id: '1',
-        categoryName: 'Air-Con',
-        description: 'Air-Con',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
+        categoryName: 'All', id: '', description: '', isDeleted: false),
     ProductCategory(
-        id: '2',
-        categoryName: 'Refrigerator',
-        description: 'Refrigerator',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
+        categoryName: 'Electronics', id: '', description: '', isDeleted: false),
     ProductCategory(
-        id: '3',
-        categoryName: 'Washing Machine',
-        description: 'Washing Machine',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
+        categoryName: 'Fashion', id: '', description: '', isDeleted: false),
     ProductCategory(
-        id: '4',
-        categoryName: 'Television',
-        description: 'Television',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '5',
-        categoryName: 'Microwave',
-        description: 'Microwave',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '6',
-        categoryName: 'Fan',
-        description: 'Fan',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '7',
-        categoryName: 'Water Heater',
-        description: 'Water Heater',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '8',
-        categoryName: 'Vacuum Cleaner',
-        description: 'Vacuum Cleaner',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '9',
-        categoryName: 'Air Purifier',
-        description: 'Air Purifier',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '10',
-        categoryName: 'Cooker',
-        description: 'Cooker',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '11',
-        categoryName: 'Water Purifier',
-        description: 'Water Purifier',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '12',
-        categoryName: 'Dishwasher',
-        description: 'Dishwasher',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '13',
-        categoryName: 'Oven',
-        description: 'Oven',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()),
-    ProductCategory(
-        id: '14',
-        categoryName: 'Blender',
-        description: 'Blender',
-        isDeleted: false,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now())
+        categoryName: 'Home & Kitchen',
+        id: '',
+        description: '',
+        isDeleted: false),
+  ];
+
+  final List<String> bannerImages = [
+    Assets.images.banner.banner1.path,
+    Assets.images.banner.banner2.path,
+    Assets.images.banner.banner3.path,
+    Assets.images.banner.banner4.path,
+  ];
+
+  final List<String> serviceImages = [
+    Assets.images.service.suaChua.path,
+    Assets.images.service.thaoLap.path,
+    Assets.images.service.veSinh.path,
   ];
 
   @override
@@ -147,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return FlexibleSpaceBar(
                         title: top < 145
                             ? Padding(
-                                padding: const EdgeInsets.only(top: 16),
+                                padding: const EdgeInsets.only(top: 32),
                                 child: Column(
                                   children: [
                                     Row(
@@ -162,12 +90,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                         IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              // Navigator.push(
+                                              //     context,
+                                              //     MaterialPageRoute(
+                                              //         builder: (context) =>
+                                              //             const SearchScreen()));
+
+                                              // Q: how to focus to SearchBar on press?
+                                              // A:
+                                            },
                                             icon: SvgPicture.asset(
                                               Assets.icons.common.search.path,
                                               height: 24,
                                               width: 24,
                                             )),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: SvgPicture.asset(
+                                            Assets.icons.common.cart.path,
+                                            height: 24,
+                                            width: 24,
+                                          ),
+                                        ),
                                         IconButton(
                                           onPressed: () {
                                             Navigator.push(
@@ -184,48 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             height: 24,
                                             width: 24,
                                           ),
-                                        )
+                                        ),
                                       ],
-                                    ),
-                                    const SizedBox(height: 4),
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          const SizedBox(width: 16),
-                                          TextButton(
-                                            onPressed: () {},
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  const WidgetStatePropertyAll(
-                                                Colors.white,
-                                              ),
-                                              textStyle:
-                                                  const WidgetStatePropertyAll(
-                                                TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              shape: WidgetStatePropertyAll(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                  side: const BorderSide(
-                                                    color: Colors.black12,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            child: const Text("All"),
-                                          ),
-                                          const SizedBox(width: 4),
-                                          ...categories.map(
-                                            (category) => ProductCategoryItems(
-                                                category: category),
-                                          ),
-                                        ],
-                                      ),
                                     ),
                                   ],
                                 ),
@@ -532,7 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         centerTitle: false,
                         titlePadding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 8),
-                        expandedTitleScale: 1.5,
+                        expandedTitleScale: 1.3,
                         collapseMode: CollapseMode.pin,
                         stretchModes: const [
                           StretchMode.fadeTitle,
@@ -541,29 +446,163 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-                  collapsedHeight: 96,
+                  collapsedHeight: 56,
                   pinned: true,
                 ),
-                SliverGrid(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.65,
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 16),
+                      child: Column(
+                        children: [
+                          Stack(
+                            children: [
+                              FlutterCarousel(
+                                options: CarouselOptions(
+                                  height: 160.0,
+                                  showIndicator: false,
+                                  enableInfiniteScroll: true,
+                                  autoPlay: true,
+                                  autoPlayInterval: const Duration(seconds: 3),
+                                  autoPlayAnimationDuration:
+                                      const Duration(milliseconds: 800),
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                  enlargeStrategy:
+                                      CenterPageEnlargeStrategy.scale,
+                                  aspectRatio: 16 / 9,
+                                  enlargeCenterPage: true,
+                                  slideIndicator: const CircularSlideIndicator(
+                                    itemSpacing: 16,
+                                  ),
+                                ),
+                                items: bannerImages.map((i) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            image: DecorationImage(
+                                                image: AssetImage(i),
+                                                fit: BoxFit.cover)),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.topProducts,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  AppLocalizations.of(context)!.seeMore,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: categories
+                                  .map((category) => ProductCategoryItems(
+                                        category: category,
+                                      ))
+                                  .toList(),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.topServices,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  AppLocalizations.of(context)!.seeMore,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: serviceImages
+                                .map((image) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 16.0),
+                                      child: Container(
+                                        height: 120,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            image: AssetImage(image),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ))
+                                .toList(),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.newArrivals,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  AppLocalizations.of(context)!.seeMore,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: List.generate(
+                                8,
+                                (index) => ProductItem(
+                                      productName: 'Product $index',
+                                      oldPrice: index % 2 == 0 ? 100 : null,
+                                      price: 100.0 - index,
+                                      imageUrl:
+                                          'https://picsum.photos/200/300?random=$index',
+                                      isFavorite: index % 2 == 0,
+                                    )),
+                          ),
+                        ],
+                      ),
                     ),
-                    delegate: SliverChildBuilderDelegate((context, int index) {
-                      return ProductItem(
-                        productName: 'Product $index',
-                        oldPrice: index % 2 == 0 ? 100 : null,
-                        price: 100.0 - index,
-                        imageUrl: 'https://picsum.photos/200/300?random=$index',
-                        isFavorite: index % 2 == 0,
-                      );
-                    }, childCount: 20))
+                  ]),
+                ),
               ],
             ),
-            const SearchScreen(),
-            const SavedScreen(),
-            const CartScreen(),
+            const ShopScreen(),
+            const AppointmentScreen(),
             const AccountScreen()
           ][selectedIndex],
           bottomNavigationBar: NavigationBar(
@@ -572,8 +611,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 selectedIndex = index;
               });
             },
-            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-            indicatorColor: Colors.white,
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+            indicatorColor: const Color(0xffF3F4F6),
+            overlayColor: const WidgetStatePropertyAll(Color(0xffF3F4F6)),
+            indicatorShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100.0)),
             backgroundColor: Colors.white,
             selectedIndex: selectedIndex,
             shadowColor: Colors.black26,
@@ -595,12 +637,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               NavigationDestination(
                 icon: SvgPicture.asset(
-                  Assets.icons.bottomNav.unselected.search.path,
+                  Assets.icons.bottomNav.unselected.shop.path,
                   height: 24,
                   width: 24,
                 ),
                 selectedIcon: SvgPicture.asset(
-                  Assets.icons.bottomNav.selected.search.path,
+                  Assets.icons.bottomNav.selected.shop.path,
                   height: 24,
                   width: 24,
                 ),
@@ -608,38 +650,25 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               NavigationDestination(
                 icon: SvgPicture.asset(
-                  Assets.icons.bottomNav.unselected.heart.path,
+                  Assets.icons.bottomNav.unselected.appointment.path,
                   height: 24,
                   width: 24,
                 ),
                 selectedIcon: SvgPicture.asset(
-                  Assets.icons.bottomNav.selected.heart.path,
+                  Assets.icons.bottomNav.selected.appointment.path,
                   height: 24,
                   width: 24,
                 ),
-                label: AppLocalizations.of(context)!.saved,
+                label: AppLocalizations.of(context)!.bookAppointment,
               ),
               NavigationDestination(
                 icon: SvgPicture.asset(
-                  Assets.icons.bottomNav.unselected.cart.path,
+                  Assets.icons.bottomNav.unselected.profile.path,
                   height: 24,
                   width: 24,
                 ),
                 selectedIcon: SvgPicture.asset(
-                  Assets.icons.bottomNav.selected.cart.path,
-                  height: 24,
-                  width: 24,
-                ),
-                label: AppLocalizations.of(context)!.cart,
-              ),
-              NavigationDestination(
-                icon: SvgPicture.asset(
-                  Assets.icons.bottomNav.unselected.user.path,
-                  height: 24,
-                  width: 24,
-                ),
-                selectedIcon: SvgPicture.asset(
-                  Assets.icons.bottomNav.selected.user.path,
+                  Assets.icons.bottomNav.selected.profile.path,
                   height: 24,
                   width: 24,
                 ),
@@ -648,16 +677,60 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           floatingActionButton: FloatingActionButton.extended(
+              key: fabKey,
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AppointmentScreen()));
+                final RenderBox renderBox =
+                    fabKey.currentContext!.findRenderObject() as RenderBox;
+                final position = renderBox.localToGlobal(Offset.zero);
+                showMenu(
+                  context: context,
+                  position: RelativeRect.fromLTRB(
+                    position.dx,
+                    position.dy - renderBox.size.height * 2,
+                    position.dx + renderBox.size.width,
+                    position.dy,
+                  ),
+                  popUpAnimationStyle: AnimationStyle(
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeInOut),
+                  color: Colors.white,
+                  items: [
+                    PopupMenuItem(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const BookAppointmentScreen()));
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(Icons.calendar_today),
+                          const SizedBox(width: 8),
+                          Text(
+                            AppLocalizations.of(context)!.bookNow,
+                          ),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 1,
+                      child: Row(
+                        children: [
+                          const Icon(Icons.support_agent_sharp),
+                          const SizedBox(width: 8),
+                          Text(
+                            AppLocalizations.of(context)!.customerService,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                );
               },
               tooltip: AppLocalizations.of(context)!.bookAppointment,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
+                  borderRadius: BorderRadius.circular(100)),
               label: Text(AppLocalizations.of(context)!.bookAppointment),
               icon: const Icon(Icons.calendar_month_sharp)),
           floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
@@ -676,30 +749,34 @@ class ProductCategoryItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: TextButton(
-        onPressed: () {
-          // TODO: Implement category filter
-        },
-        style: ButtonStyle(
-          backgroundColor: const WidgetStatePropertyAll(
-            Colors.white,
-          ),
-          textStyle: const WidgetStatePropertyAll(
-            TextStyle(
-              color: Colors.black,
-            ),
-          ),
-          shape: WidgetStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              side: const BorderSide(
-                color: Colors.black12,
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: SizedBox(
+        width: 64,
+        child: Column(
+          children: [
+            Container(
+              width: 62,
+              height: 62,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.grey[200],
+                // image: DecorationImage(
+                //   image: AssetImage(Assets.images.category.electronics.path),
+                //   fit: BoxFit.cover,
+                // ),
               ),
             ),
-          ),
+            const SizedBox(height: 8),
+            Text(
+              category.categoryName,
+              softWrap: true,
+              style: const TextStyle(
+                fontSize: 12,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
-        child: Text(category.categoryName),
       ),
     );
   }

@@ -25,9 +25,15 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// Directory path: assets/images/banner
+  $AssetsImagesBannerGen get banner => const $AssetsImagesBannerGen();
+
   /// File path: assets/images/onboarding.png
   AssetGenImage get onboarding =>
       const AssetGenImage('assets/images/onboarding.png');
+
+  /// Directory path: assets/images/service
+  $AssetsImagesServiceGen get service => const $AssetsImagesServiceGen();
 
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
@@ -50,6 +56,9 @@ class $AssetsIconsBottomNavGen {
 
 class $AssetsIconsCommonGen {
   const $AssetsIconsCommonGen();
+
+  /// File path: assets/icons/common/cart.svg
+  SvgGenImage get cart => const SvgGenImage('assets/icons/common/cart.svg');
 
   /// File path: assets/icons/common/en.png
   AssetGenImage get en => const AssetGenImage('assets/icons/common/en.png');
@@ -79,61 +88,95 @@ class $AssetsIconsCommonGen {
 
   /// List of all assets
   List<dynamic> get values =>
-      [en, eye, eyeOff, filter, notification, search, trash, vn];
+      [cart, en, eye, eyeOff, filter, notification, search, trash, vn];
+}
+
+class $AssetsImagesBannerGen {
+  const $AssetsImagesBannerGen();
+
+  /// File path: assets/images/banner/banner_1.png
+  AssetGenImage get banner1 =>
+      const AssetGenImage('assets/images/banner/banner_1.png');
+
+  /// File path: assets/images/banner/banner_2.png
+  AssetGenImage get banner2 =>
+      const AssetGenImage('assets/images/banner/banner_2.png');
+
+  /// File path: assets/images/banner/banner_3.png
+  AssetGenImage get banner3 =>
+      const AssetGenImage('assets/images/banner/banner_3.png');
+
+  /// File path: assets/images/banner/banner_4.png
+  AssetGenImage get banner4 =>
+      const AssetGenImage('assets/images/banner/banner_4.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [banner1, banner2, banner3, banner4];
+}
+
+class $AssetsImagesServiceGen {
+  const $AssetsImagesServiceGen();
+
+  /// File path: assets/images/service/sua_chua.png
+  AssetGenImage get suaChua =>
+      const AssetGenImage('assets/images/service/sua_chua.png');
+
+  /// File path: assets/images/service/thao_lap.png
+  AssetGenImage get thaoLap =>
+      const AssetGenImage('assets/images/service/thao_lap.png');
+
+  /// File path: assets/images/service/ve_sinh.png
+  AssetGenImage get veSinh =>
+      const AssetGenImage('assets/images/service/ve_sinh.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [suaChua, thaoLap, veSinh];
 }
 
 class $AssetsIconsBottomNavSelectedGen {
   const $AssetsIconsBottomNavSelectedGen();
 
-  /// File path: assets/icons/bottom_nav/selected/cart.svg
-  SvgGenImage get cart =>
-      const SvgGenImage('assets/icons/bottom_nav/selected/cart.svg');
-
-  /// File path: assets/icons/bottom_nav/selected/heart.svg
-  SvgGenImage get heart =>
-      const SvgGenImage('assets/icons/bottom_nav/selected/heart.svg');
+  /// File path: assets/icons/bottom_nav/selected/appointment.svg
+  SvgGenImage get appointment =>
+      const SvgGenImage('assets/icons/bottom_nav/selected/appointment.svg');
 
   /// File path: assets/icons/bottom_nav/selected/home.svg
   SvgGenImage get home =>
       const SvgGenImage('assets/icons/bottom_nav/selected/home.svg');
 
-  /// File path: assets/icons/bottom_nav/selected/search.svg
-  SvgGenImage get search =>
-      const SvgGenImage('assets/icons/bottom_nav/selected/search.svg');
+  /// File path: assets/icons/bottom_nav/selected/profile.svg
+  SvgGenImage get profile =>
+      const SvgGenImage('assets/icons/bottom_nav/selected/profile.svg');
 
-  /// File path: assets/icons/bottom_nav/selected/user.svg
-  SvgGenImage get user =>
-      const SvgGenImage('assets/icons/bottom_nav/selected/user.svg');
+  /// File path: assets/icons/bottom_nav/selected/shop.svg
+  SvgGenImage get shop =>
+      const SvgGenImage('assets/icons/bottom_nav/selected/shop.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [cart, heart, home, search, user];
+  List<SvgGenImage> get values => [appointment, home, profile, shop];
 }
 
 class $AssetsIconsBottomNavUnselectedGen {
   const $AssetsIconsBottomNavUnselectedGen();
 
-  /// File path: assets/icons/bottom_nav/unselected/cart.svg
-  SvgGenImage get cart =>
-      const SvgGenImage('assets/icons/bottom_nav/unselected/cart.svg');
-
-  /// File path: assets/icons/bottom_nav/unselected/heart.svg
-  SvgGenImage get heart =>
-      const SvgGenImage('assets/icons/bottom_nav/unselected/heart.svg');
+  /// File path: assets/icons/bottom_nav/unselected/appointment.svg
+  SvgGenImage get appointment =>
+      const SvgGenImage('assets/icons/bottom_nav/unselected/appointment.svg');
 
   /// File path: assets/icons/bottom_nav/unselected/home.svg
   SvgGenImage get home =>
       const SvgGenImage('assets/icons/bottom_nav/unselected/home.svg');
 
-  /// File path: assets/icons/bottom_nav/unselected/search.svg
-  SvgGenImage get search =>
-      const SvgGenImage('assets/icons/bottom_nav/unselected/search.svg');
+  /// File path: assets/icons/bottom_nav/unselected/profile.svg
+  SvgGenImage get profile =>
+      const SvgGenImage('assets/icons/bottom_nav/unselected/profile.svg');
 
-  /// File path: assets/icons/bottom_nav/unselected/user.svg
-  SvgGenImage get user =>
-      const SvgGenImage('assets/icons/bottom_nav/unselected/user.svg');
+  /// File path: assets/icons/bottom_nav/unselected/shop.svg
+  SvgGenImage get shop =>
+      const SvgGenImage('assets/icons/bottom_nav/unselected/shop.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [cart, heart, home, search, user];
+  List<SvgGenImage> get values => [appointment, home, profile, shop];
 }
 
 class Assets {

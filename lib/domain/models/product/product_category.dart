@@ -10,18 +10,18 @@ class ProductCategory {
   final String description;
 @JsonKey(name: 'is_deleted')
   final bool isDeleted;
-@JsonKey(name: 'created_at')
-  final DateTime createdAt;
-@JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+// @JsonKey(name: 'created_at')
+//   final DateTime createdAt;
+// @JsonKey(name: 'updated_at')
+//   final DateTime updatedAt;
 
   ProductCategory({
     required this.id,
     required this.categoryName,
     required this.description,
     required this.isDeleted,
-    required this.createdAt,
-    required this.updatedAt,
+    // required this.createdAt,
+    // required this.updatedAt,
   });
 
   factory ProductCategory.fromJson(Map<String, dynamic> json) =>

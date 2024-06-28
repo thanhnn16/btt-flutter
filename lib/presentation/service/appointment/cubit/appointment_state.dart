@@ -5,32 +5,37 @@ class AppointmentState extends Equatable {
   final String? message;
   final List<ServiceCategory> serviceCategories;
   final List<Service> services;
-  final int? selectedServiceCategory;
-  final int? selectedService;
-  final String? selectedDate;
-  final String? selectedTime;
+  final ServiceCategory? selectedServiceCategory;
+  final Service? selectedService;
+  final DateTime? selectedDate;
+  final TimeOfDay? selectedTime;
+  final bool? isFetch;
 
-  const AppointmentState(
-      {this.isLoading,
-      this.message,
-      required this.serviceCategories,
-      required this.services,
-      this.selectedServiceCategory,
-      this.selectedService,
-      this.selectedDate,
-      this.selectedTime});
+  const AppointmentState({
+    this.isLoading,
+    this.message,
+    required this.serviceCategories,
+    required this.services,
+    this.selectedServiceCategory,
+    this.selectedService,
+    this.selectedDate,
+    this.selectedTime,
+    this.isFetch,
+  });
 
   AppointmentState copyWith({
+    bool? isFetch,
     bool? isLoading,
     String? message,
     List<ServiceCategory>? serviceCategories,
     List<Service>? services,
-    int? selectedServiceCategory,
-    int? selectedService,
-    String? selectedDate,
-    String? selectedTime,
+    ServiceCategory? selectedServiceCategory,
+    Service? selectedService,
+    DateTime? selectedDate,
+    TimeOfDay? selectedTime,
   }) {
     return AppointmentState(
+      isFetch: isFetch ?? this.isFetch,
       isLoading: isLoading ?? this.isLoading,
       message: message ?? this.message,
       serviceCategories: serviceCategories ?? this.serviceCategories,
@@ -52,6 +57,7 @@ class AppointmentState extends Equatable {
         selectedServiceCategory,
         selectedService,
         selectedDate,
-        selectedTime
+        selectedTime,
+        isFetch,
       ];
 }

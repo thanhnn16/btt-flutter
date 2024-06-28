@@ -15,7 +15,7 @@ class Product {
   final String? categoryId;
   final String status;
   @JsonKey(name: 'is_deleted')
-  final bool isDeleted;
+  final int isDeleted;
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'modified_at')

@@ -9,12 +9,12 @@ class ServiceRepository {
   //   return ServiceResponse(status: 200, message: 'Success');
   // }
 
-  Future<ServiceResponse> getServiceDetail(int id) async {
+  Future<ServiceResponse> getServiceDetail(String id) async {
     final response = await apiClient.dio.get('/service/$id');
     return ServiceResponse.fromJson(response.data);
   }
 
-  Future<ServiceResponse> getServiceByCategory(int id) async {
+  Future<ServiceResponse> getServiceByCategory(String id) async {
     final response = await apiClient.dio.get('/service-by-category/$id');
     return ServiceResponse.fromJson(response.data);
   }

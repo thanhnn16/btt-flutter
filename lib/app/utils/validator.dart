@@ -29,7 +29,7 @@ class Validator {
       return AppLocalizations.of(context)!.emptyPassword;
     }
 
-    if (value.length < 6) {
+    if (value.length < 6 || value.length > 12) {
       return AppLocalizations.of(context)!.invalidPassword;
     }
 

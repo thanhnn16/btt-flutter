@@ -1,3 +1,4 @@
+import 'package:bongtuyettrang/presentation/widgets/commons/button.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -10,6 +11,18 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: Colors.white,
+      child: Center(
+        child: Button(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          label: 'Search',
+        ),
+      ),
+    );
   }
 }

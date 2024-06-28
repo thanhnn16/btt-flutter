@@ -7,15 +7,13 @@ part of 'service.dart';
 // **************************************************************************
 
 Service _$ServiceFromJson(Map<String, dynamic> json) => Service(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as String,
       serviceName: json['service_name'] as String,
       servicePrice: (json['service_price'] as num).toDouble(),
       serviceDescription: json['service_description'] as String?,
-      categoryId: (json['category_id'] as num?)?.toInt(),
-      status: json['status'] as String,
+      categoryId: json['category_id'] as String?,
+      status: json['status'] as String?,
       isDeleted: json['is_deleted'] as bool,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      modifiedAt: DateTime.parse(json['modified_at'] as String),
     );
 
 Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
@@ -26,6 +24,4 @@ Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
       'category_id': instance.categoryId,
       'status': instance.status,
       'is_deleted': instance.isDeleted,
-      'created_at': instance.createdAt.toIso8601String(),
-      'modified_at': instance.modifiedAt.toIso8601String(),
     };

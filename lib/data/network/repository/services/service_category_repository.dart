@@ -8,7 +8,6 @@ class ServiceCategoryRepository {
 
   Future<ServiceCategoryResponse> getServiceCategories() async {
     final response = await apiClient.dio.get('/service-categories');
-    print('Repository response: $response');
     return ServiceCategoryResponse.fromJson(response.data);
   }
 
