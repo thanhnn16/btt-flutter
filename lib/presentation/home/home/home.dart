@@ -1,5 +1,6 @@
 import 'package:bongtuyettrang/domain/models/product/product_category.dart';
 import 'package:bongtuyettrang/gen/assets.gen.dart';
+import 'package:bongtuyettrang/presentation/gemini/gemini.dart';
 import 'package:bongtuyettrang/presentation/home/account/account.dart';
 import 'package:bongtuyettrang/presentation/home/notification/notification.dart';
 import 'package:bongtuyettrang/presentation/home/shop/shop.dart';
@@ -715,6 +716,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     PopupMenuItem(
                       value: 1,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const GeminiChatScreen()));
+                      },
                       child: Row(
                         children: [
                           const Icon(Icons.support_agent_sharp),

@@ -4,6 +4,7 @@ import 'package:bongtuyettrang/presentation/auth/splash.dart';
 import 'package:bongtuyettrang/presentation/service/appointment/cubit/appointment_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ import 'data/network/repository/services/service_repository.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await dotenv.load(fileName: ".env");
 
   runApp(MultiBlocProvider(providers: [
     BlocProvider(
