@@ -17,40 +17,45 @@ class _AccountScreenState extends State<AccountScreen> {
     return BlocBuilder<LanguageCubit, LanguageState>(
       builder: (context, state) {
         return Material(
-          child: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterScreen(),
-                      ),
-                    );
-                  },
-                  child: Text(AppLocalizations.of(context)!.logout),
-                ),
-                ElevatedButton(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(AppLocalizations.of(context)!.account),
+            ),
+            body: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ElevatedButton(
                     onPressed: () {
-                      if (state.locale.languageCode == 'en') {
-                        context
-                            .read<LanguageCubit>()
-                            .changeLanguage(const Locale('vi'));
-                      } else {
-                        context
-                            .read<LanguageCubit>()
-                            .changeLanguage(const Locale('en'));
-                      }
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ),
+                      );
                     },
-                    child: Text(state.locale.languageCode == 'en'
-                        ? 'English'
-                        : 'Vietnamese')),
-              ],
+                    child: Text(AppLocalizations.of(context)!.logout),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        if (state.locale.languageCode == 'en') {
+                          context
+                              .read<LanguageCubit>()
+                              .changeLanguage(const Locale('vi'));
+                        } else {
+                          context
+                              .read<LanguageCubit>()
+                              .changeLanguage(const Locale('en'));
+                        }
+                      },
+                      child: Text(state.locale.languageCode == 'en'
+                          ? 'English'
+                          : 'Vietnamese')),
+                ],
+              ),
             ),
           ),
         );

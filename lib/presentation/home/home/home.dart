@@ -516,9 +516,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 16),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
+                            padding: EdgeInsets.zero,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: categories
                                   .map((category) => ProductCategoryItems(
                                         category: category,
