@@ -93,6 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           return Scaffold(
             resizeToAvoidBottomInset: true,
             body: Material(
+              color: Colors.white,
               child: GestureDetector(
                 onTap: () {
                   FocusScope.of(context).unfocus();

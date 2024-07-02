@@ -1,10 +1,12 @@
-import 'dart:convert';
-
+import 'package:bongtuyettrang/gen/assets.gen.dart';
+import 'package:bongtuyettrang/presentation/gemini/cubit/gemini_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
-import '../../app/utils/const.dart';
+import '../../app/utils/check_permission.dart';
+import 'cubit/gemini_state.dart';
 
 class GeminiChatScreen extends StatefulWidget {
   const GeminiChatScreen({super.key});
@@ -14,132 +16,163 @@ class GeminiChatScreen extends StatefulWidget {
 }
 
 class _GeminiChatScreenState extends State<GeminiChatScreen> {
-  final _chatHistory = <ChatMessage>[];
   final _messageController = TextEditingController();
+  final SpeechToText _speechToText = SpeechToText();
+  bool _isListening = false;
+  bool _hasAudioPermission = false;
+  late GeminiCubit _geminiCubit;
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _speechToText.initialize();
+    _checkAudioPermission();
+    _geminiCubit = GeminiCubit(const GeminiState());
+  }
 
   @override
   void dispose() {
     _messageController.dispose();
+    _geminiCubit.close();
     super.dispose();
   }
 
-  Future<void> _sendMessage(String message) async {
-    final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: dotenv.env['GEMINI_API_KEY'] ?? '',
-      generationConfig: GenerationConfig(
-          temperature: 1,
-          topK: 64,
-          topP: 0.95,
-          maxOutputTokens: 200,
-          responseMimeType: 'application/json',
-          responseSchema: Schema.object(
-            properties: {
-              'message': Schema.string(),
-              'data': Schema.object(properties: {
-                'service_category': Schema.string(),
-                'service': Schema.string(),
-                'date_time': Schema.string(),
-              }),
-              'available_services': Schema.array(items: Schema.string()),
-            },
-          )),
-      systemInstruction: Content.text(systemInstruction),
-    );
+  void _checkAudioPermission() async {
+    _hasAudioPermission = await checkAudioPermission();
+    if (!_hasAudioPermission) {
+      requestAudioPermission();
+    }
+  }
 
-    setState(() {
-      _chatHistory.add(ChatMessage(
-        message: message,
-        role: ChatRole.user,
-      ));
-    });
+  void _sendMessage(String message) {
+    _geminiCubit.sendMessage(message);
+  }
 
-    final chat = model.startChat();
-
-    _messageController.clear();
-
-    Content content = Content.text(message);
-    GenerateContentResponse response = await chat.sendMessage(content);
-
-    try {
-      final chatResponseJson = jsonDecode(response.text ?? '');
-      final chatResponse = ChatResponse.fromJson(chatResponseJson);
-      setState(() {
-        _chatHistory.add(ChatMessage(
-          message: chatResponse.message,
-          role: ChatRole.modal,
-        ));
+  void _startListening() {
+    if (!_speechToText.isAvailable) {
+      showAdaptiveDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Lỗi'),
+              content:
+                  const Text('Thiết bị của bạn không hỗ trợ chức năng này.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _isListening = false;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Đóng'),
+                ),
+              ],
+            );
+          });
+    }
+    if (!_isListening) {
+      _speechToText.listen(onResult: (result) {
+        _messageController.text = result.recognizedWords;
+        // _sendMessage(result.recognizedWords);
       });
-    } catch (e) {
-      print('Error parsing Gemini response: $e');
-      print('Response text: ${response.text}');
       setState(() {
-        _chatHistory.add(ChatMessage(
-          message: 'Error processing your request. Please try again later.',
-          role: ChatRole.modal,
-        ));
+        _isListening = true;
+      });
+    } else {
+      _speechToText.stop();
+      setState(() {
+        _isListening = false;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Trợ lý ảo Bông Tuyết Trắng'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: _chatHistory.length,
-              itemBuilder: (context, index) {
-                final message = _chatHistory[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Align(
-                    alignment: message.role == ChatRole.user
-                        ? Alignment.bottomRight
-                        : Alignment.bottomLeft,
-                    child: Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: message.role == ChatRole.user
-                            ? Colors.blue
-                            : Colors.grey[300],
-                        borderRadius: BorderRadius.circular(16.0),
+    return BlocProvider(
+      create: (context) => _geminiCubit,
+      child: BlocBuilder<GeminiCubit, GeminiState>(builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Trợ lý ảo Bông Tuyết Trắng'),
+          ),
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: state.chatHistory.length,
+                  itemBuilder: (context, index) {
+                    final message = state.chatHistory[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: message.role == ChatRole.user
+                            ? Alignment.bottomRight
+                            : Alignment.bottomLeft,
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: message.role == ChatRole.user
+                                ? Colors.blue
+                                : Colors.grey[300],
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: Column(
+                            children: [
+                              if (message.role == ChatRole.loading)
+                                Lottie.asset(Assets.animations.typing.path,
+                                    width: 100, height: 100),
+                              Text(message.message),
+                            ],
+                          ),
+                        ),
                       ),
-                      child: Text(message.message),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: const InputDecoration(
-                      hintText: 'Nhập tin nhắn...',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    _sendMessage(_messageController.text);
+                    );
                   },
-                  icon: const Icon(Icons.send),
+                  controller: _scrollController,
                 ),
-              ],
-            ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    if (!_isListening)
+                      IconButton(
+                        onPressed: _startListening,
+                        icon: const Icon(Icons.mic),
+                      )
+                    else
+                      IconButton(
+                        onPressed: _startListening,
+                        icon: const Icon(Icons.stop),
+                      ),
+                    Expanded(
+                      child: TextField(
+                        controller: _messageController,
+                        decoration: const InputDecoration(
+                          hintText: 'Nhập tin nhắn...',
+                          border: OutlineInputBorder(),
+                        ),
+                        onSubmitted: (value) {
+                          _messageController.clear();
+                          _sendMessage(value);
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _sendMessage(_messageController.text);
+                      },
+                      icon: const Icon(Icons.send),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      }),
     );
   }
 }
@@ -151,36 +184,4 @@ class ChatMessage {
   ChatMessage({required this.message, required this.role});
 }
 
-class ChatResponse {
-  final String message;
-  final Map<String, dynamic> data;
-  final List<String> availableServices;
-
-  ChatResponse({
-    required this.message,
-    required this.data,
-    required this.availableServices,
-  });
-
-  factory ChatResponse.fromJson(Map<String, dynamic> json) {
-    return ChatResponse(
-      message: json['message'],
-      // Assuming the message is under "message"
-      data: json['data'] ?? {},
-      // Assuming the data is under "data", handle null
-      availableServices:
-          (json['available_services'] as List<dynamic>?)?.cast<String>() ??
-              [], // Handle null and cast to String
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'message': message,
-      'data': data,
-      'available_services': availableServices,
-    };
-  }
-}
-
-enum ChatRole { user, modal }
+enum ChatRole { user, modal, loading }

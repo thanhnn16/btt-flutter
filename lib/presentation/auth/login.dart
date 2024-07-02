@@ -65,7 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
       child: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: Colors.white,
             body: Material(
+              color: Colors.white,
               child: SizedBox(
                 height: double.infinity,
                 child: GestureDetector(

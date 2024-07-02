@@ -73,39 +73,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   flexibleSpace: LayoutBuilder(
                     builder: (context, BoxConstraints constraints) {
                       double top = constraints.biggest.height;
+                      bool isExpanded = top >
+                          145; // Kiểm tra xem AppBar có được mở rộng hay không
+
                       return FlexibleSpaceBar(
-                        title: top < 145
-                            ? Padding(
+                        title: isExpanded
+                            ? null // Ẩn tiêu đề khi AppBar được mở rộng
+                            : Padding(
                                 padding: const EdgeInsets.only(top: 32),
-                                child: Column(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  // Canh giữa các phần tử trong Row
                                   children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.discover,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge,
+                                    ),
                                     Row(
                                       children: [
-                                        Expanded(
-                                          child: Text(
-                                            AppLocalizations.of(context)!
-                                                .discover,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineLarge,
+                                        IconButton(
+                                          onPressed: () {
+                                            // Xử lý sự kiện khi nhấn nút tìm kiếm
+                                          },
+                                          icon: SvgPicture.asset(
+                                            Assets.icons.common.search.path,
+                                            height: 24,
+                                            width: 24,
                                           ),
                                         ),
-                                        IconButton(
-                                            onPressed: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: (context) =>
-                                              //             const SearchScreen()));
-
-                                              // Q: how to focus to SearchBar on press?
-                                              // A:
-                                            },
-                                            icon: SvgPicture.asset(
-                                              Assets.icons.common.search.path,
-                                              height: 24,
-                                              width: 24,
-                                            )),
                                         IconButton(
                                           onPressed: () {},
                                           icon: SvgPicture.asset(
@@ -135,8 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ],
                                 ),
-                              )
-                            : null,
+                              ),
                         background: Stack(
                           fit: StackFit.expand,
                           children: [
@@ -146,293 +143,94 @@ class _HomeScreenState extends State<HomeScreen> {
                               right: 24,
                               child: Column(
                                 children: [
-                                  Row(children: [
-                                    Expanded(
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    // Canh giữa các phần tử trong Row
+                                    children: [
+                                      Expanded(
                                         child: Text(
-                                      '${AppLocalizations.of(context)!.hello}, thanhnn16',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineLarge,
-                                    )),
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const NotificationScreen(),
-                                          ),
-                                        );
-                                      },
-                                      icon: SvgPicture.asset(
-                                        Assets.icons.common.notification.path,
-                                        height: 24,
-                                        width: 24,
-                                      ),
-                                    )
-                                  ]),
-                                  const SizedBox(height: 4),
-                                  Row(children: [
-                                    Expanded(
-                                        child: SearchBar(
-                                      shape: WidgetStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      )),
-                                      elevation:
-                                          const WidgetStatePropertyAll(0.0),
-                                      side: const WidgetStatePropertyAll(
-                                          BorderSide(
-                                        color: Colors.black26,
-                                      )),
-                                      backgroundColor:
-                                          const WidgetStatePropertyAll(
-                                              Colors.white),
-                                      hintText: AppLocalizations.of(context)!
-                                          .searchForProducts,
-                                      hintStyle: const WidgetStatePropertyAll(
-                                        TextStyle(
-                                          fontSize: 14,
+                                          '${AppLocalizations.of(context)!.hello}, thanhnn16',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineLarge,
+                                          overflow: TextOverflow
+                                              .ellipsis, // Thêm thuộc tính này để xử lý trường hợp văn bản quá dài
                                         ),
                                       ),
-                                    )),
-                                    IconButton(
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const NotificationScreen(),
+                                            ),
+                                          );
+                                        },
+                                        icon: SvgPicture.asset(
+                                          Assets.icons.common.notification.path,
+                                          height: 24,
+                                          width: 24,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: SearchBar(
+                                          shape: WidgetStatePropertyAll(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                          ),
+                                          elevation:
+                                              const WidgetStatePropertyAll(0.0),
+                                          side: const WidgetStatePropertyAll(
+                                            BorderSide(
+                                              color: Colors.black26,
+                                            ),
+                                          ),
+                                          backgroundColor:
+                                              const WidgetStatePropertyAll(
+                                            Colors.white,
+                                          ),
+                                          hintText:
+                                              AppLocalizations.of(context)!
+                                                  .searchForProducts,
+                                          hintStyle:
+                                              const WidgetStatePropertyAll(
+                                            TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
                                         onPressed: () {
                                           showModalBottomSheet(
-                                              context: context,
-                                              showDragHandle: true,
-                                              useSafeArea: true,
-                                              builder: (context) {
-                                                return SingleChildScrollView(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 16.0,
-                                                            right: 16.0,
-                                                            bottom: 24.0),
-                                                    child: Column(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            IconButton(
-                                                              onPressed: () {},
-                                                              icon: SvgPicture
-                                                                  .asset(
-                                                                Assets
-                                                                    .icons
-                                                                    .common
-                                                                    .filter
-                                                                    .path,
-                                                                height: 24,
-                                                                width: 24,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              AppLocalizations.of(
-                                                                      context)!
-                                                                  .filter,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineMedium,
-                                                            ),
-                                                            IconButton(
-                                                                onPressed:
-                                                                    () {},
-                                                                icon: const Icon(
-                                                                    Icons
-                                                                        .close)),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        const Divider(),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              // TODO
-                                                              // AppLocalizations.of(context)!.priceRange,
-                                                              'Price Range',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                            Text(
-                                                              '\$0 - \$100',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        const Divider(),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              //  TODO
-                                                              // AppLocalizations.of(context)!.rating,
-                                                              'Rating',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                            Text(
-                                                              '4.5',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        const Divider(),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              // TODO
-                                                              // AppLocalizations.of(context)!.brand,
-                                                              'Brand',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                            Text(
-                                                              'Samsung',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        const Divider(),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              // TODO:
-                                                              // AppLocalizations.of(context)!.color,
-                                                              'Color',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                            Text(
-                                                              'Black',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        const Divider(),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              // TODO
-                                                              // AppLocalizations.of(context)!.size,
-                                                              'Size',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                            Text(
-                                                              'Large',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        const Divider(),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              AppLocalizations.of(
-                                                                      context)!
-                                                                  .clearAll,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                            Text(
-                                                              AppLocalizations.of(
-                                                                      context)!
-                                                                  .apply,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                              });
+                                            context: context,
+                                            showDragHandle: true,
+                                            useSafeArea: true,
+                                            builder: (context) {
+                                              return const FilterSheet();
+                                            },
+                                          );
                                         },
                                         icon: SvgPicture.asset(
                                           Assets.icons.common.filter.path,
                                           height: 52,
                                           width: 52,
-                                        )),
-                                  ]),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                         centerTitle: false,

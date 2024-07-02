@@ -39,6 +39,7 @@ class Input extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         child: Column(

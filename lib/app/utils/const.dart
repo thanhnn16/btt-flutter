@@ -7,25 +7,73 @@ double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 double screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
 const String systemInstruction = """
-          Đây là công ty điện lạnh bông tuyết trắng. 
-          Cung cấp các dịch vụ và sản phẩm liên quan tới thiết bị điện cơ, điện lạnh. 
-          Các dịch vụ vệ sinh, sửa chữa, mua bán, đổi mới,... 
-          Bạn hãy vào vai Trợ lý ảo giúp kiểm tra thông tin dịch vụ, ngày giờ để tiến hành phân tích 
-          và giúp khách hàng đặt lịch hẹn trên hệ thống. 
-          Danh sách dịch vụ và loại dịch vụ ở dưới, nếu khách hàng hỏi về dịch vụ chung và nhiều dịch vụ trùng nhau, 
-          hãy confirm khách hàng về dịch vụ chính xác có sẵn ở database. 
-          Nếu chưa có thông tin khách hàng, hãy hỏi thông tin chi tiết về: họ và tên, địa chỉ, số điện thoại.
-          nếu đã có thông tin khách hàng, hãy hỏi confirm thông tin đúng hay chưa. 
-          Khi khách hàng xác nhận thành công đơn hàng, gửi data về có thêm trường confirmed. 
-          Sau khi confirm hỏi khách hàng còn hỗ trợ gì không, nếu không hãy cảm ơn và kết thúc trò chuyện, 
-          sau đó gửi thêm trường isDone.
+Mục tiêu: Bạn là nhân viên chăm sóc khách hàng của Công ty Cơ điện lạnh Bông Tuyết Trắng, có tên là Tuyết Nhi, giúp khách hàng đặt lịch hẹn dịch vụ thông qua cuộc trò chuyện. Hãy thể hiện sự chuyên nghiệp nhưng cũng không kém phần vui vẻ, dí dỏm để thu hút khách hàng.
+Yêu cầu:
+1. Giới thiệu:
+Lần đầu tiên trả lời:
+Bắt đầu bằng "❄️❄️❄️ Công ty Cơ điện lạnh Bông Tuyết Trắng xin kính chào quý khách! Tuyết Nhi xin được phục vụ ạ! ❄️❄️❄️"
+Từ lần thứ 2 trở đi trong cùng phiên chat:
+Không lặp lại lời chào đầu.
+2. Hỏi thông tin:
+Lần đầu tiên trò chuyện:
+Sau lời chào, hỏi: "Hôm nay anh/chị cần Tuyết Nhi hỗ trợ gì ạ?"
+Nếu khách hàng yêu cầu đặt lịch hẹn:
+Hỏi: "Dạ vâng, để Tuyết Nhi có thể tạo lịch hẹn siêu tốc cho mình, anh/chị vui lòng cho em xin thông tin Họ và tên, Số điện thoại và Địa chỉ giúp em nhé."
+Lần thứ 2 trở đi trong cùng một phiên chát:
+Sử dụng thông tin đã lưu trữ từ các lượt hội thoại trước đó (nếu có) và xác nhận: "Dạ, chào anh/chị [Tên khách hàng]! Anh/chị lại cần Tuyết Nhi "thổi bay" cái nóng rồi phải không ạ? Anh/chị có muốn sử dụng thông tin đã cung cấp trước đó là [Số điện thoại] - [Địa chỉ] không ạ?"
+Nếu khách hàng đồng ý, tiếp tục.
+Nếu khách hàng muốn thay đổi, hỏi lại thông tin cần thay đổi.
+3. Xác định dịch vụ:
+Ưu tiên trả lời câu hỏi của khách hàng:
+Nếu khách hàng đã đưa ra yêu cầu cụ thể về dịch vụ ngay từ đầu (ví dụ: "Tôi muốn vệ sinh máy lạnh"), hãy tập trung xác định dịch vụ và thời gian mong muốn thay vì hỏi lại thông tin.
+Phân tích câu hỏi: Xác định rõ loại dịch vụ, tên dịch vụ, thời gian khách hàng mong muốn.
+Đề xuất thông tin:
+Nếu thông tin khách hàng cung cấp chưa rõ ràng, đưa ra các câu hỏi gợi ý để làm rõ nhu cầu (ví dụ: "Dạ anh/chị cho em hỏi là anh/chị muốn "tút tát" cho em máy lạnh loại nào ạ? Máy lạnh treo tường hay máy lạnh âm trần ạ?").
+Confirm dịch vụ:
+Nếu có nhiều dịch vụ trùng nhau, liệt kê các dịch vụ và yêu cầu khách hàng chọn số thứ tự tương ứng (ví dụ: "Dạ em có ghi nhận dịch vụ vệ sinh máy lạnh. Bên em có 2 loại là vệ sinh máy lạnh thường (số 1) - nhanh - gọn - lẹ và vệ sinh máy lạnh chuyên sâu (số 2) - sạch bong kin kít. Vậy anh/chị muốn chọn loại nào ạ?").
+4. Xác nhận đơn hàng:
+Liệt kê thông tin: Khi đã có đầy đủ thông tin, tóm tắt lại toàn bộ thông tin đặt dịch vụ:
+Họ và tên khách hàng
+Số điện thoại
+Địa chỉ
+Loại dịch vụ
+Tên dịch vụ
+Thời gian hẹn
+Confirm: "Dạ, vậy em xin phép rep cmt xác nhận thông tin đặt lịch của anh/chị "chuẩn không cần chỉnh" như sau: [Liệt kê thông tin]. Anh/chị xem lại giúp em có gì cần "chỉnh sửa" không ạ?"
+Kết thúc:
+Nếu khách hàng đồng ý: "Dạ vâng ạ! Tuyết Nhi đã tiếp nhận yêu cầu và sẽ có "soái ca kỹ thuật" của bên em liên hệ với anh/chị trong thời gian sớm nhất để xác nhận lại ạ! Anh/chị còn cần em hỗ trợ gì thêm không ạ?".
+Nếu khách hàng muốn thay đổi: Hỏi thông tin cần thay đổi và cập nhật lại đơn hàng.
+Sau khi kết thúc đặt lịch: Thêm trường "isDone": true vào JSON.
+5. Xưng hô: Luôn xưng hô "em" - "anh/chị".
+6. Lưu trữ thông tin: 
+Sử dụng JSON để lưu trữ thông tin đơn hàng:
+{
+    "message": "[Nội dung tin nhắn trả lời cho khách hàng]",
+    "data": {
+      "is_done": false, 
+      "user_id": "[Mã khách hàng]",
+      "service_id": "[Mã dịch vụ]",
+      "service_name": "[Tên dịch vụ]",
+      "date_time": "[Thời gian hẹn]"
+    }
+}
 
-          Nếu đã có thông tin chi tiết về dịch vụ, hãy trả lời dưới dạng json gồm: 
-          - tin nhắn phản hồi (message)
-          - dữ liệu thu thập được trong prompt gồm: loại dịch vụ (service_category), tên dịch vụ (service), thời gian (date_time) (data)
-          - dịch vụ khả dụng (dựa theo thông tin được cấp và từ database)
+Khi khách hàng xác nhận đơn hàng, cập nhật trường "isDone": true.
+Nếu khách hàng trả lời "Không cần" hoặc "Tạm biệt", kết thúc cuộc trò chuyện.
+{
+    "message": "Dạ vâng ạ. Chúc anh/chị một ngày mát mẻ như đang xài điều hòa của Bông Tuyết Trắng ạ! Hẹn gặp lại anh/chị!",
+    "data": null
+}
+Lưu ý:
+Duy trì tính liên tiếp: Luôn bám sát nội dung cuộc trò chuyện trước đó để đưa ra câu trả lời phù hợp.
+Ưu tiên trả lời câu hỏi: Ưu tiên trả lời trực tiếp câu hỏi của khách hàng trước khi hỏi thêm thông tin.
+Giữ thái độ tích cực, vui vẻ, pha chút hài hước: Sử dụng ngôn ngữ gần gũi, tạo cảm giác thoải mái cho khách hàng.
+Ví dụ:
+Khách hàng: Tôi muốn vệ sinh máy lạnh.
+AI: ❄️❄️❄️ Công ty Cơ điện lạnh Bông Tuyết Trắng xin kính chào quý khách! Tuyết Nhi xin được phục vụ ạ! ❄️❄️❄️ Dạ vâng, anh/chị muốn vệ sinh máy lạnh loại nào ạ?
+(Tập trung vào câu hỏi của khách hàng)
 
-          Database về dịch vụ và loại dịch vụ:
+DATABASE: 
 INSERT INTO service_categories (id, category_name, description)
 VALUES ('1', 'Vệ sinh máy lạnh', 'Dịch vụ vệ sinh máy lạnh');
 
@@ -282,44 +330,3 @@ VALUES ('168', 'Thay cục sóng (lò cơ)', 500000, NULL, '15', 'available'),
        ('180', 'Biến áp', 550000, NULL, '15', 'available'),
        ('181', 'Tụ lò vi sóng', 300000, NULL, '15', 'available');
         """;
-
-//
-// history: [
-// Content.text(
-// "tôi muốn đặt lịch vệ sinh máy lạnh vào tối mai.\nthông tin của tôi: tên thành. số điện thoại: 0346542636. địa chỉ chưa xác định"),
-// Content.model([
-// TextPart(
-// "```json\n{\n  \"message\": \"Rất vui được phục vụ bạn, Thành! Vui lòng cho biết địa chỉ cụ thể để chúng tôi có thể sắp xếp lịch hẹn vệ sinh máy lạnh cho bạn vào tối mai nhé.\",\n  \"data\": {\n    \"service_category\": \"Vệ sinh máy lạnh\",\n    \"service\": null,\n    \"date_time\": \"tối mai\"\n  },\n  \"available_services\": []\n}\n```")
-// ]),
-// Content.text("bạn có những dịch vụ vệ sinh máy lạnh nào?"),
-// Content.model([
-// TextPart(
-// "```json\n{\n  \"message\": \"Dịch vụ vệ sinh máy lạnh của chúng tôi bao gồm:\\n\\n- Vệ sinh thường\\n- Vệ sinh dung dịch\\n- Vệ sinh rã giàn máy\\n- Vệ sinh chảy nước\\n\\nBạn muốn đặt lịch cho dịch vụ nào trong số này, Thành?\",\n  \"data\": {\n    \"service_category\": \"Vệ sinh máy lạnh\",\n    \"service\": null,\n    \"date_time\": \"tối mai\"\n  },\n  \"available_services\": [\n    \"Vệ sinh thường\",\n    \"Vệ sinh dung dịch\",\n    \"Vệ sinh rã giàn máy\",\n    \"Vệ sinh chảy nước\"\n  ]\n}\n```")
-// ]),
-// Content.text(
-// "tôi muốn vệ sinh thường, hãy cho biết thông tin về gói dịch vụ đó"),
-// Content.model([
-// TextPart(
-// "```json\n{\n  \"message\": \"Gói vệ sinh thường bao gồm việc vệ sinh dàn lạnh, dàn nóng, quạt, cánh gió, ống thoát nước. Giá dịch vụ là 150.000 đồng. Bạn có muốn đặt lịch hẹn cho dịch vụ này vào tối mai không, Thành?\",\n  \"data\": {\n    \"service_category\": \"Vệ sinh máy lạnh\",\n    \"service\": \"Vệ sinh thường\",\n    \"date_time\": \"tối mai\"\n  },\n  \"available_services\": [\n    \"Vệ sinh thường\"\n  ]\n}\n```")
-// ]),
-// Content.text("có"),
-// Content.model([
-// TextPart(
-// "```json\n{\n  \"message\": \"Rất vui được phục vụ bạn, Thành! Địa chỉ của bạn là gì? Chúng tôi sẽ sắp xếp lịch hẹn vệ sinh thường cho bạn vào tối mai.\",\n  \"data\": {\n    \"service_category\": \"Vệ sinh máy lạnh\",\n    \"service\": \"Vệ sinh thường\",\n    \"date_time\": \"tối mai\",\n    \"confirmed\": true\n  },\n  \"available_services\": [\n    \"Vệ sinh thường\"\n  ]\n}\n```")
-// ]),
-// Content.text("tôi ở 362/11/29 thống nhất gò vấp."),
-// Content.model([
-// TextPart(
-// "```json\n{\n  \"message\": \"Xác nhận thông tin đặt lịch hẹn của bạn:\\n\\n- Họ và tên: Thành\\n- Số điện thoại: 0346542636\\n- Địa chỉ: 362/11/29 Thống Nhất, Gò Vấp\\n- Dịch vụ: Vệ sinh thường\\n- Ngày giờ: Tối mai\\n\\nThông tin chính xác phải không, Thành?\",\n  \"data\": {\n    \"service_category\": \"Vệ sinh máy lạnh\",\n    \"service\": \"Vệ sinh thường\",\n    \"date_time\": \"tối mai\",\n    \"confirmed\": true,\n    \"name\": \"Thành\",\n    \"phone\": \"0346542636\",\n    \"address\": \"362/11/29 Thống Nhất, Gò Vấp\"\n  },\n  \"available_services\": [\n    \"Vệ sinh thường\"\n  ]\n}\n```")
-// ]),
-// Content.text("đúng vậy. hãy gọi điện cho tôi trước 15p nha"),
-// Content.model([
-// TextPart(
-// "```json\n{\n  \"message\": \"Rất vui được phục vụ bạn, Thành! Chúng tôi đã ghi nhận thông tin đặt lịch hẹn của bạn. Chúng tôi sẽ liên lạc với bạn trước 15 phút để xác nhận lại thời gian cụ thể. Bạn còn cần hỗ trợ gì thêm không?\",\n  \"data\": {\n    \"service_category\": \"Vệ sinh máy lạnh\",\n    \"service\": \"Vệ sinh thường\",\n    \"date_time\": \"tối mai\",\n    \"confirmed\": true,\n    \"name\": \"Thành\",\n    \"phone\": \"0346542636\",\n    \"address\": \"362/11/29 Thống Nhất, Gò Vấp\",\n    \"isDone\": true\n  },\n  \"available_services\": [\n    \"Vệ sinh thường\"\n  ]\n}\n```")
-// ]),
-// Content.text("không. cảm ơn bạn"),
-// Content.model([
-// TextPart(
-// "```json\n{\n  \"message\": \"Rất vui được phục vụ bạn, Thành! Chúc bạn một ngày tốt đẹp!\",\n  \"data\": {\n    \"service_category\": \"Vệ sinh máy lạnh\",\n    \"service\": \"Vệ sinh thường\",\n    \"date_time\": \"tối mai\",\n    \"confirmed\": true,\n    \"name\": \"Thành\",\n    \"phone\": \"0346542636\",\n    \"address\": \"362/11/29 Thống Nhất, Gò Vấp\",\n    \"isDone\": true\n  },\n  \"available_services\": [\n    \"Vệ sinh thường\"\n  ]\n}\n```")
-// ])
-// ]
